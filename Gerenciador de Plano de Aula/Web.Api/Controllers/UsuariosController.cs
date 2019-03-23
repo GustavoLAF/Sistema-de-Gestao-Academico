@@ -30,11 +30,5 @@ namespace Web.Api.Controllers
 
             return Ok(usuario);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok("TESTE OK");
-        }
     }
 }

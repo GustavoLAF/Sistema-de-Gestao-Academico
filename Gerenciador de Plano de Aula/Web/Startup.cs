@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Gerenciador_de_Plano_de_Aula
+namespace Web
 {
     public class Startup
     {

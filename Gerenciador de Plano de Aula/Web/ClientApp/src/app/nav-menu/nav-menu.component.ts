@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+
+  constructor() {
+  }
+
   isExpanded = false;
 
   collapse() {

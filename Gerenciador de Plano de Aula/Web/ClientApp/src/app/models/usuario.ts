@@ -4,4 +4,5 @@ export class Usuario {
   sobrenome: string;
   email: string;
   cargo: string;
+  token: string
 }

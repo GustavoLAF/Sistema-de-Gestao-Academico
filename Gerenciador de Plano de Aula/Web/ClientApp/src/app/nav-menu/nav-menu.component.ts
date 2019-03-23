@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { AutenticacaoService } from '../services/autenticacao.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,8 +9,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  isLoggedIn: Observable<boolean>;
 
-  constructor() {
+  constructor(private authService: AutenticacaoService) { }
+
+  ngOnInit() {
+    this.isLoggedIn$ = this.authService.isLoggedIn;
   }
 
   isExpanded = false;

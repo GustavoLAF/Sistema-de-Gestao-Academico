@@ -62,9 +62,10 @@ namespace Web.Api
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
-            services.AddDbContext<DatabaseContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DbContextConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DbContextConnection"),
+                    o => o.MigrationsAssembly("Web.Server"));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -87,11 +88,6 @@ namespace Web.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
-            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.Migrate();
-            //}
         }
     }
 }

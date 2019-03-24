@@ -1,4 +1,4 @@
 export class Credencial {
-  usuario: string;
+  email: string;
   senha: string;
 }

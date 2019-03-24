@@ -10,15 +10,17 @@ var Usuario = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Usuario.usuarioMap = function (usuario) {
-        var u = new Usuario();
-        u.id = usuario.id;
-        u.nome = usuario.nome;
-        u.sobrenome = usuario.sobrenome;
-        u.email = usuario.email;
-        u.senha = usuario.senha;
-        u.cargo = usuario.cargo;
-        u.token = usuario.token;
+    Usuario.map = function (usuario) {
+        var u = null;
+        if (usuario) {
+            u = new Usuario();
+            u.id = usuario.id;
+            u.nome = usuario.nome;
+            u.sobrenome = usuario.sobrenome;
+            u.email = usuario.email;
+            u.senha = usuario.senha;
+            u.cargo = usuario.cargo;
+        }
         return u;
     };
     return Usuario;

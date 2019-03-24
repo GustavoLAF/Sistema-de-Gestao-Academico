@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -16,24 +15,22 @@ namespace Web.Server.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly AppSettings _appSettings;
-        private List<Usuario> _usuarios = new List<Usuario>
-        {
-            new Usuario { Id = 1, Nome = "Test", Sobrenome = "User", Email = "test@gmail.com", Senha = "test" }
-        };
+        private readonly AppDbContext _dbContext;
 
-        public UsuarioRepository(IOptions<AppSettings> appSettings)
+        public UsuarioRepository(IOptions<AppSettings> appSettings, AppDbContext dbContext)
         {
             this._appSettings = appSettings.Value ?? throw new ArgumentNullException(nameof(appSettings));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
         public async Task<Usuario> AutenticarAsync(string email, string senha)
         {
-            var usuario = await Task.Run(() => _usuarios.SingleOrDefault(u => u.Email == email && u.Senha == senha));
+            var usuario = await Task.Run(() => _dbContext.Usuarios.SingleOrDefault(u => u.Email == email && u.Senha == senha));
 
             if (usuario == null)
                 return null;
 
-            // authentication successful so generate jwt token
+            //JWT Token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor

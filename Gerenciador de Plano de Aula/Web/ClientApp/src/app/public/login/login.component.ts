@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.autenticando = true;
-    this.authService.entrar(this.credencial.usuario, this.credencial.senha)
+    this.authService.entrar(this.credencial.email, this.credencial.senha)
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);

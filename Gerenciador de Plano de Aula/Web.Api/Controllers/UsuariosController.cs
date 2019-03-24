@@ -23,10 +23,10 @@ namespace Web.Api.Controllers
         [HttpPost("autenticar")]
         public async Task<IActionResult> Authenticate([FromBody]Credencial credencial)
         {
-            var usuario = await _usuarioRepository.AutenticarAsync(credencial.Usuario, credencial.Senha);
+            var usuario = await _usuarioRepository.AutenticarAsync(credencial.Email, credencial.Senha);
 
             if (usuario == null)
-                return BadRequest(new { message = "E-mail ou senha inválidos" });
+                return BadRequest(new { message = "E-mail ou senha inválido" });
 
             return Ok(usuario);
         }

@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Web.Server.Interfaces;
 using Web.Server.Models;
 
 namespace Web.Server
 {
-    public class DatabaseContext : DbContext
+    public class AppDbContext : DbContext, IAppDbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }
 

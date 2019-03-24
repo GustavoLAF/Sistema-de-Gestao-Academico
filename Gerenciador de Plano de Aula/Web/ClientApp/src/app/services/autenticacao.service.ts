@@ -6,35 +6,38 @@ import { environment } from '../../environments/environment';
 
 import { Usuario } from '../models/usuario';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AutenticacaoService {
 
-  private loggedIn = new BehaviorSubject<boolean>(this.tokenHabilitado());
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
+  private logado = new BehaviorSubject<boolean>(this.tokenHabilitado());
+  get estaLogado(): Observable<boolean> {
+    return this.logado.asObservable();
+  }
+
+  get usuarioCorrente(): Usuario {
+    return JSON.parse(localStorage.getItem('usuarioCorrente'));
   }
 
   constructor(private http: HttpClient) { }
 
-  login(usuario: string, senha: string): Observable<Usuario> {
+  entrar(usuario: string, senha: string): Observable<Usuario> {
     return this.http.post<Usuario>(`${environment.WebApiEndpoint}/usuarios/autenticar`, { usuario, senha })
       .pipe(map(user => {
         if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.loggedIn.next(true);
+          localStorage.setItem('usuarioCorrente', JSON.stringify(user));
+          this.logado.next(true);
         }
         return user;
       }));
   }
-  logout(): void {
-    localStorage.removeItem('currentUser');
-    this.loggedIn.next(false);
+  sair(): void {
+    localStorage.removeItem('usuarioCorrente');
+    this.logado.next(false);
 
   }
   private tokenHabilitado(): boolean {
-    return !!localStorage.getItem('currentUser');
+    return !!localStorage.getItem('usuarioCorrente');
   }
 }

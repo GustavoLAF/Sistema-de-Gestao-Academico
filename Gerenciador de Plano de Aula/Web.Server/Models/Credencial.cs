@@ -1,4 +1,4 @@
-﻿namespace Contracts.Entities
+﻿namespace Web.Server.Models
 {
     public class Credencial
     {

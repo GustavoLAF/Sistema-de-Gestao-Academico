@@ -1,14 +1,16 @@
-﻿using Contracts.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Web.Api.Helpers;
-using Web.Api.Repositories;
+using Web.Server;
+using Web.Server.Helpers;
+using Web.Server.Interfaces;
+using Web.Server.Repositories;
 
 namespace Web.Api
 {
@@ -60,6 +62,11 @@ namespace Web.Api
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
+            services.AddDbContext<DatabaseContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DbContextConnection"));
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -80,6 +87,11 @@ namespace Web.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            //using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            //{
+            //    serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>().Database.Migrate();
+            //}
         }
     }
 }

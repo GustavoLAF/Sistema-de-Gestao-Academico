@@ -1,0 +1,19 @@
+<h4>Cadastrar Curso</h4><br />
+<form name="form" (ngSubmit)="f.form.valid && criar()" #f="ngForm" novalidate>
+  <div class="row form-group">
+    <div class="col-md-6">
+      <label for="nome">Nome</label>
+      <input type="text" class="form-control" name="nome" [(ngModel)]="curso.nome" #nome="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nome.errors }" required />
+      <div *ngIf="f.submitted && !nome.valid" class="invalid-feedback">Nome é requerido</div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-6">
+      <label for="descricao">Descrição</label>
+      <input type="text" class="form-control" name="descricao" [(ngModel)]="curso.descricao" #descricao="ngModel" [ngClass]="{ 'is-invalid': f.submitted && descricao.errors }" required />
+      <div *ngIf="f.submitted && !descricao.valid" class="invalid-feedback">Descrição é requerido</div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+

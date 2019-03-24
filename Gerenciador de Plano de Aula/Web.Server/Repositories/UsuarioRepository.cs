@@ -1,6 +1,4 @@
-﻿using Contracts.Entities;
-using Contracts.Interfaces;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -9,9 +7,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Web.Api.Helpers;
+using Web.Server.Helpers;
+using Web.Server.Interfaces;
+using Web.Server.Models;
 
-namespace Web.Api.Repositories
+namespace Web.Server.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
@@ -50,11 +50,6 @@ namespace Web.Api.Repositories
 
             usuario.Senha = null;
             return usuario;
-        }
-
-        public Task<IEnumerable<Usuario>> GetAll()
-        {
-            throw new NotImplementedException();
         }
     }
 }

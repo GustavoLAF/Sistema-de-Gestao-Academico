@@ -1,0 +1,39 @@
+<h4>Cadastrar Usuário</h4><br />
+<form name="form" (ngSubmit)="f.form.valid && criar()" #f="ngForm" novalidate>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label for="nome">Nome</label>
+      <input type="text" class="form-control" name="nome" [(ngModel)]="usuario.nome" #nome="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nome.errors }" required />
+      <div *ngIf="f.submitted && !nome.valid" class="invalid-feedback">Nome é requerido</div>
+    </div>
+    <div class="col-md-4">
+      <label for="sobrenome">Sobrenome</label>
+      <input type="text" class="form-control" name="sobrenome" [(ngModel)]="usuario.sobrenome" #sobrenome="ngModel" [ngClass]="{ 'is-invalid': f.submitted && sobrenome.errors }" required />
+      <div *ngIf="f.submitted && !sobrenome.valid" class="invalid-feedback">Sobrenome é requerido</div>
+    </div>
+    <div class="col-md-4">
+      <label for="dataNascimento">Data de Nascimento</label>
+      <input type="date" class="form-control" name="sobrenome" [(ngModel)]="usuario.dataNascimento" #dataNascimento="ngModel" [ngClass]="{ 'is-invalid': f.submitted && dataNascimento.errors }" required />
+      <div *ngIf="f.submitted && !dataNascimento.valid" class="invalid-feedback">Data de Nascimento é requerido</div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label for="email">E-mail</label>
+      <input type="email" class="form-control" name="email" [(ngModel)]="usuario.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }" required email />
+      <div *ngIf="f.submitted && !email.valid" class="invalid-feedback">E-mail é requerido</div>
+    </div>
+    <div class="col-md-4">
+      <label for="senha">Senha</label>
+      <input type="password" class="form-control" name="senha" [(ngModel)]="usuario.senha" #senha="ngModel" [ngClass]="{ 'is-invalid': f.submitted && senha.errors }" required />
+      <div *ngIf="f.submitted && !senha.valid" class="invalid-feedback">Senha é requerida</div>
+    </div>
+    <!--<div class="col-md-4">
+      <label for="senhaVerificacao">Confirmar</label>
+      <input type="password" class="form-control" name="senhaVerificacao" [(ngModel)]="senhaVerificacao" #senhaVerificacao="ngModel" [ngClass]="{ 'is-invalid': f.submitted && senha.errors || senha != senhaVerificacao }" required />
+      <div *ngIf="f.submitted && !senhaVerificacao.valid" class="invalid-feedback">Confirme sua senha</div>
+    </div>-->
+  </div>
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+

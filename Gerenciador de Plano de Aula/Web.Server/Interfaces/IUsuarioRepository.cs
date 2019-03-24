@@ -1,12 +1,11 @@
-﻿using Contracts.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Web.Server.Models;
 
-namespace Contracts.Interfaces
+namespace Web.Server.Interfaces
 {
     public interface IUsuarioRepository
     {
         Task<Usuario> AutenticarAsync(string email, string senha);
-        Task<IEnumerable<Usuario>> GetAll();
     }
 }

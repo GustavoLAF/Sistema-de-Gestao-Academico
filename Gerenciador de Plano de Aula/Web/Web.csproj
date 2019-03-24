@@ -27,15 +27,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    <None Remove="ClientApp\src\app\helpers\error.interceptor.ts" />
+    <None Remove="ClientApp\src\app\models\credencial.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\models\" />
+    <Folder Include="ClientApp\src\app\features\cadastros\" />
     <Folder Include="ClientApp\src\app\guards\" />
     <Folder Include="ClientApp\src\app\directives\" />
     <Folder Include="ClientApp\src\app\public\" />
     <Folder Include="ClientApp\src\app\services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\helpers\error.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\credencial.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

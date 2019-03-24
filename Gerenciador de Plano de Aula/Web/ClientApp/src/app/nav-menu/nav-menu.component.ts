@@ -9,12 +9,12 @@ import { AutenticacaoService } from '../services/autenticacao.service';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isLoggedIn: Observable<boolean>;
+  estaLogado: Observable<boolean>;
 
   constructor(private authService: AutenticacaoService) { }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn;
+    this.estaLogado = this.authService.estaLogado;
   }
 
   isExpanded = false;

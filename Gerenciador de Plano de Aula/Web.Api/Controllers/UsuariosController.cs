@@ -1,9 +1,9 @@
-﻿using Contracts.Entities;
-using Contracts.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Web.Server.Interfaces;
+using Web.Server.Models;
 
 namespace Web.Api.Controllers
 {

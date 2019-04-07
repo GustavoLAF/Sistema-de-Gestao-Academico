@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import swal from 'sweetalert';
 
 import { Usuario } from '../../../_models/usuario';
 import { Cargos } from '../../../_enums/cargos.enum';
 import { UsuarioService } from '../../../_services/usuario.service';
 import { NgForm } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-criar-usuario',
@@ -14,16 +16,17 @@ export class CriarUsuarioComponent implements OnInit {
 
   usuario: Usuario;
   cargos = Cargos;
+  salvando: boolean;
 
   constructor(private usuarioService: UsuarioService) {
     this.usuario = new Usuario();
+    this.salvando = false;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   aoSelecionarCargo(checked: any, cargo: Cargos): void {
-    if (checked.currentTarget.checked) {
+    if (checked) {
       this.usuario.cargo |= cargo;
     } else {
       this.usuario.cargo -= cargo;
@@ -54,14 +57,24 @@ export class CriarUsuarioComponent implements OnInit {
     }
   }
   criar(f: NgForm): void {
+    this.salvando = true;
     this.usuarioService.criar(this.usuario)
+      .pipe(finalize(() => this.salvando = false))
       .subscribe(
         id => {
-          alert('Usuário criado com sucesso!');
-          console.log('usuário criado, id:', id);
-          f.resetForm();
+          swal({
+            title: "Sucesso!",
+            text: "Usuário cadastrado.",
+            icon: "success"
+          }).then(() => {
+            f.resetForm();
+          });
         }, error => {
-          console.log('erro ao criar usuário', error);
+          swal({
+            title: "Ops!",
+            text: "Houve algum problema... Tente novamente mais tarde.",
+            icon: "warning"
+          });
         });
   }
 

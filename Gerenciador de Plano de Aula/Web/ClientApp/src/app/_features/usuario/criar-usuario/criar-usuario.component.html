@@ -1,6 +1,6 @@
 <h4>Cadastrar Usuário</h4>
 <hr />
-<form name="form" (ngSubmit)="f.form.valid && criar(f)" #f="ngForm">
+<form name="form" (ngSubmit)="f.form.valid && (usuario.cargo != null && usuario.cargo != 0) && criar(f)" #f="ngForm">
   <div class="row form-group">
     <div class="col-md-4">
       <label for="cpf">CPF</label>
@@ -47,21 +47,25 @@
     <div class="col-md-6">
       <label>Cargos</label><br />
       <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="administrador"
-               (change)="aoSelecionarCargo($event, cargos.administrador)" [disabled]="seForProfessor()" />
+        <input type="checkbox" class="custom-control-input" name="administrador" [(ngModel)]="administrador" id="administrador"
+               (ngModelChange)="aoSelecionarCargo($event, cargos.administrador)" [disabled]="seForProfessor()" />
         <label class="custom-control-label" for="administrador">Administrador</label>
       </div>
       <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="coordenador"
-               (change)="aoSelecionarCargo($event, cargos.coordenador)" />
+        <input type="checkbox" class="custom-control-input" name="coordenador" [(ngModel)]="coordenador" id="coordenador"
+               (ngModelChange)="aoSelecionarCargo($event, cargos.coordenador)" />
         <label class="custom-control-label" for="coordenador">Coordenador</label>
       </div>
       <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="professor"
-               (change)="aoSelecionarCargo($event, cargos.professor)" [disabled]="seForAdmin()" />
+        <input type="checkbox" class="custom-control-input" name="professor" [(ngModel)]="professor" id="professor"
+               (ngModelChange)="aoSelecionarCargo($event, cargos.professor)" [disabled]="seForAdmin()" />
         <label class="custom-control-label" for="professor">Professor</label>
       </div>
     </div>
   </div>
-  <button type="submit" class="btn btn-success float-right">Salvar</button>
+  <button type="submit" class="btn btn-success float-right">
+    <i class="fa fa-save mr-2" *ngIf="!salvando"></i>
+    <i class="spinner-border spinner-border-sm mr-2" *ngIf="salvando"></i>
+    <span>Salvar</span>
+  </button>
 </form>

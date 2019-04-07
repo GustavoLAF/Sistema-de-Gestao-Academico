@@ -2,7 +2,6 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <!-- TODO: PIPE CPF E EMAIL -->
       <th scope="col">CPF</th>
       <th scope="col">Nome completo</th>
       <th scope="col">E-mail</th>
@@ -11,13 +10,17 @@
     </tr>
   </thead>
   <tbody>
+    <tr *ngIf="carregando">
+      <td class="text-center" colspan="5">
+        <div class="spinner-border" role="status"></div>
+      </td>
+    </tr>
     <tr *ngFor="let usuario of usuarios">
       <td>{{ usuario.cpf | cpf }}</td>
       <td>{{ usuario.nome }} {{ usuario.sobrenome }}</td>
       <td>{{ usuario.email }}</td>
       <td>{{ usuario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
       <td>
-        <!-- TODO: Colocar tooltip nos botões -->
         <div class="row">
           <div class="col-md-3">
             <button class="btn btn-info">
@@ -35,6 +38,6 @@
   </tbody>
 </table>
 <button class="btn btn-primary float-right" [routerLink]='["/usuarios/criar"]'>
-  <i class="fa fa-plus"></i>
-  <span> Criar</span>
+  <i class="fa fa-user-plus mr-2"></i>
+  <span>Criar</span>
 </button>

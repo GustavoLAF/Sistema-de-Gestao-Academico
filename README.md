@@ -1,1 +1,1 @@
-# Gerenciador-de-Planos-de-Aula
+# Sistema-de-Gestão-Academico

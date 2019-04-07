@@ -47,7 +47,7 @@ export class CriarCursoComponent implements OnInit {
           console.log('curso criado, id:', id);
           f.resetForm();
         }, error => {
-          console.log('error ao criar curso');
+          console.log('error ao criar curso', error);
         });
   }
 

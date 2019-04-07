@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let usuario of usuarios">
-      <td>{{ usuario.cpf }}</td>
+      <td>{{ usuario.cpf | cpf }}</td>
       <td>{{ usuario.nome }} {{ usuario.sobrenome }}</td>
       <td>{{ usuario.email }}</td>
       <td>{{ usuario.dataNascimento | date: 'dd/MM/yyyy' }}</td>

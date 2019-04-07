@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { NgxMaskModule } from 'ngx-mask'
+import { Ng2BRPipesModule } from 'ng2-brpipes';
 
 import { AdminGuard } from 'src/app/_guards/admin.guard';
 
@@ -15,6 +17,8 @@ import { CriarUsuarioComponent } from './criar-usuario/criar-usuario.component';
     CommonModule,
     FormsModule,
     AutoCompleteModule,
+    Ng2BRPipesModule,
+    NgxMaskModule.forRoot(),
     RouterModule.forChild([
       { path: '', component: ListarUsuariosComponent, canActivate: [AdminGuard] },
       { path: 'criar', component: CriarUsuarioComponent, canActivate: [AdminGuard] }

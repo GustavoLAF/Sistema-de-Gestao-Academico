@@ -1,10 +1,11 @@
 <h4>Cadastrar Usuário</h4>
 <hr />
-<form name="form" (ngSubmit)="f.form.valid && criar()" #f="ngForm">
+<form name="form" (ngSubmit)="f.form.valid && criar(f)" #f="ngForm">
   <div class="row form-group">
     <div class="col-md-4">
       <label for="cpf">CPF</label>
-      <input type="text" class="form-control" name="cpf" [(ngModel)]="usuario.cpf" #cpf="ngModel" [ngClass]="{ 'is-invalid': f.submitted && cpf.errors }" required />
+      <input type="text" class="form-control" name="cpf" [(ngModel)]="usuario.cpf" #cpf="ngModel" [ngClass]="{ 'is-invalid': f.submitted && cpf.errors }"
+             mask="000.000.000-00" required />
       <div *ngIf="f.submitted && !cpf.valid" class="invalid-feedback">CPF é obrigatório</div>
     </div>
   </div>
@@ -28,7 +29,7 @@
   <div class="row form-group">
     <div class="col-md-4">
       <label for="email">E-mail</label>
-      <input type="email" class="form-control" name="email" [(ngModel)]="usuario.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }" required email />
+      <input type="email" class="form-control" name="email" placeholder="exemplo@gmail.com" [(ngModel)]="usuario.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }" required email />
       <div *ngIf="f.submitted && !email.valid" class="invalid-feedback">E-mail é obrigatório</div>
     </div>
     <div class="col-md-4">
@@ -43,21 +44,24 @@
     </div>-->
   </div>
   <div class="row form-group">
-    <div class="col-md-4">
-      <label>Cargos</label>
-      <select multiple class="form-control" [(ngModel)]="usuario.cargo" name="cargo">
-        <option selected hidden>Selecione...</option>
-        <option [value]="cargos.professor">Professor</option>
-        <option [value]="cargos.coordenador" [disabled]="usuario.cargo == cargos.professor">Coordenador</option>
-        <option [value]="cargos.administrador">Administrador</option>
-      </select>
+    <div class="col-md-6">
+      <label>Cargos</label><br />
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="administrador"
+               (change)="aoSelecionarCargo($event, cargos.administrador)" [disabled]="seForProfessor()" />
+        <label class="custom-control-label" for="administrador">Administrador</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="coordenador"
+               (change)="aoSelecionarCargo($event, cargos.coordenador)" />
+        <label class="custom-control-label" for="coordenador">Coordenador</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="professor"
+               (change)="aoSelecionarCargo($event, cargos.professor)" [disabled]="seForAdmin()" />
+        <label class="custom-control-label" for="professor">Professor</label>
+      </div>
     </div>
   </div>
-  <button type="submit" class="btn btn-success">Enviar</button>
+  <button type="submit" class="btn btn-success float-right">Salvar</button>
 </form>
-
-<p-autoComplete [(ngModel)]="brand" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" [size]="30"
-                [minLength]="1" placeholder="Hint: type 'v' or 'f'" [dropdown]="true" required>
-</p-autoComplete>
-
-

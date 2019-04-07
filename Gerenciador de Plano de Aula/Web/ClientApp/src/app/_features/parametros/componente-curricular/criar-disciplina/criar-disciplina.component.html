@@ -8,13 +8,33 @@
       <div *ngIf="f.submitted && !nome.valid" class="invalid-feedback">Nome é obrigatório</div>
     </div>
   </div>
-  <!--<div class="row form-group">
+  <label for="peso">Peso</label>
+  <div class="row form-group">
     <div class="col-md-4">
-      <label for="descricao">Peso</label>
-      <input type="text" class="form-control" name="descricao" [(ngModel)]="curso.descricao" #descricao="ngModel" [ngClass]="{ 'is-invalid': f.submitted && descricao.errors }" required />
-      <div *ngIf="f.submitted && !descricao.valid" class="invalid-feedback">Descrição é obrigatório</div>
+      <label for="pesoTeoria">Teoria</label>
+      <div class="input-group">
+        <input type="number" class="form-control" name="pesoTeoria" [(ngModel)]="disciplina.pesoTeoria" #pesoTeoria="ngModel" min="0" max="100" [ngClass]="{ 'is-invalid': f.submitted && pesoTeoria.errors }" required />
+        <div class="input-group-append">
+          <span class="input-group-text">%</span>
+        </div>
+      </div>
+      <div *ngIf="f.submitted && !pesoTeoria.valid" class="invalid-feedback">Peso Teoria é obrigatório</div>
     </div>
-  </div>-->
-  <button type="submit" class="btn btn-success float-right"><i class="fa fa-save"></i> Salvar</button>
+    <div class="col-md-4">
+      <label for="pesoPratica">Prática</label>
+      <div class="input-group">
+        <input type="number" class="form-control" name="pesoPratica" [(ngModel)]="disciplina.pesoPratica" #pesoPratica="ngModel" min="0" max="100" [ngClass]="{ 'is-invalid': f.submitted && pesoPratica.errors }" required />
+        <div class="input-group-append">
+          <span class="input-group-text">%</span>
+        </div>
+      </div>
+      <div *ngIf="f.submitted && !pesoPratica.valid" class="invalid-feedback">Peso Prática é obrigatório</div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success float-right">
+    <i class="fa fa-save mr-2" *ngIf="!salvando"></i>
+    <i class="spinner-border spinner-border-sm mr-2" *ngIf="salvando"></i>
+    <span>Salvar</span>
+  </button>
 </form>
 

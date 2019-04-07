@@ -7,6 +7,6 @@ namespace Web.Server.Interfaces
     public interface IDisciplinaRepository
     {
         Task<IEnumerable<Disciplina>> GetAllAsync();
-        Task<int> CriarAsync(Disciplina disciplina);
+        Task CriarAsync(Disciplina disciplina);
     }
 }

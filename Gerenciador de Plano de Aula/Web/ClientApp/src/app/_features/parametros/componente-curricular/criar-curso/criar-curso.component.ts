@@ -24,6 +24,7 @@ export class CriarCursoComponent implements OnInit {
     private cursoService: CursoService) {
     this.curso = new Curso();
     this.coordenadores = [];
+    this.salvando = false;
   }
 
   ngOnInit() { }

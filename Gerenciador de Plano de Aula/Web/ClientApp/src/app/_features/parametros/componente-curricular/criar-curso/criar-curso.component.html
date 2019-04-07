@@ -16,8 +16,8 @@
     </div>
   </div>
   <div class="row form-group">
-    <div class="col-md-4">
-      <label for="coordenador">Coordenador</label>
+    <div class="col-md-6">
+      <label for="coordenador">Coordenador</label><br />
       <p-autoComplete name="coordenador" [(ngModel)]="coordenador" field="nome" (onSelect)="aoSelecionarCoordenador($event)" (onClear)="aoSelecionarCoordenador($event)"
                       [suggestions]="coordenadores" (completeMethod)="buscarCoordenadores($event)" [size]="40"
                       [forceSelection]="true" [dropdown]="true" required>

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Server.Interfaces;
@@ -10,29 +12,39 @@ namespace Web.Server.Repositories
 {
     public class DisciplinaRepository : IDisciplinaRepository
     {
-        private readonly AppDbContext _dbContext;
+        private readonly Func<IDbConnection> _connectionFactory;
 
-        public DisciplinaRepository(AppDbContext dbContext)
+        public DisciplinaRepository(Func<IDbConnection> connectionFactory)
         {
-            this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
-        public async Task<int> CriarAsync(Disciplina disciplina)
+        public async Task CriarAsync(Disciplina disciplina)
         {
-            await _dbContext.Disciplinas.AddAsync(disciplina);
-            _dbContext.SaveChanges();
+            var sql = $@"INSERT INTO Disciplinas (Nome, PesoTeoria, PesoPratica) 
+                         VALUES (@{nameof(disciplina.Nome)}, 
+                                 @{nameof(disciplina.PesoTeoria)}, 
+                                 @{nameof(disciplina.PesoPratica)})";
 
-            return disciplina.Id;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                await connection.ExecuteAsync(sql, new { disciplina.Nome, disciplina.PesoTeoria, disciplina.PesoPratica });
+            }
         }
 
         public async Task<IEnumerable<Disciplina>> GetAllAsync()
         {
-            var disciplinas = await _dbContext.Disciplinas.ToArrayAsync();
+            var sql = "SELECT D.* FROM Disciplinas D";
 
-            if (!disciplinas.Any())
-                return null;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                var disciplinas = await connection.QueryAsync<Disciplina>(sql);
 
-            return disciplinas;
+                if (!disciplinas.Any())
+                    return null;
+
+                return disciplinas;
+            }
         }
     }
 }

@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 
 import { AuthService } from './auth.service';
-import { Curso } from '../_models/curso';
+import { Disciplina } from '../_models/disciplina';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CursoService {
+export class DisciplinaService {
 
   constructor(private authService: AuthService) { }
 
-  criar(curso: Curso): Observable<any> {
-    return this.authService.post(`${environment.WebApiEndpoint}/cursos`, curso);
+  criar(disciplina: Disciplina): Observable<any> {
+    return this.authService.post(`${environment.WebApiEndpoint}/disciplinas`, disciplina);
   }
 }

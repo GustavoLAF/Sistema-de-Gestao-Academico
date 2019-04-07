@@ -15,13 +15,6 @@ export class UsuarioService {
 
   constructor(private authService: AuthService) { }
 
-  //getById(id: string): Observable<Usuario> {
-  //  return this.http.get(`${environment.WebApiEndpoint}/usuarios/${id}`)
-  //    .pipe(map((usuario: Usuario) => {
-  //      return Usuario.map(usuario).shift();
-  //    }));
-  //}
-
   findByCargo(cargo: Cargos, q: string, pagesize: number): Observable<Usuario[]> {
     var params = new HttpParams();
     if (q) {
@@ -38,7 +31,7 @@ export class UsuarioService {
       .pipe(tap((usuarios: Usuario[]) => usuarios));
   }
 
-  criar(usuario: Usuario): Observable<number> {
+  criar(usuario: Usuario): Observable<any> {
     return this.authService.post(`${environment.WebApiEndpoint}/usuarios`, usuario);
   }
 }

@@ -14,7 +14,7 @@ export class SemestreService {
 
   constructor(private authService: AuthService) { }
 
-  findByCodigo(q: string, pagesize: number): Observable<Disciplina[]> {
+  findByCodigo(q: string, pagesize: number): Observable<Semestre[]> {
     var params = new HttpParams();
     if (q) {
       params = params.set("q", q);

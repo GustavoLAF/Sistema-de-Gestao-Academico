@@ -19,6 +19,45 @@ namespace Web.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Web.Server.Models.Curso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoordenadorId");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired();
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cursos");
+                });
+
+            modelBuilder.Entity("Web.Server.Models.Disciplina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CursoId");
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.Property<int>("PesoPratica");
+
+                    b.Property<int>("PesoTeoria");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Disciplinas");
+                });
+
             modelBuilder.Entity("Web.Server.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -27,17 +66,22 @@ namespace Web.Server.Migrations
 
                     b.Property<int>("Cargo");
 
-                    b.Property<string>("Cpf");
+                    b.Property<string>("Cpf")
+                        .IsRequired();
 
                     b.Property<DateTime>("DataNascimento");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .IsRequired();
 
-                    b.Property<string>("Senha");
+                    b.Property<string>("Senha")
+                        .IsRequired();
 
-                    b.Property<string>("Sobrenome");
+                    b.Property<string>("Sobrenome")
+                        .IsRequired();
 
                     b.HasKey("Id");
 

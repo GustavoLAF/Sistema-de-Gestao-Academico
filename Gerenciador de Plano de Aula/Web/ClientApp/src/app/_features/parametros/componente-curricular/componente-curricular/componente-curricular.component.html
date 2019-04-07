@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-4">
+    <label>Tipo do Componente</label>
+    <select class="form-control" [(ngModel)]="tipoComponente">
+      <option selected>Selecione...</option>
+      <option [value]="tiposComponente.Curso">Curso</option>
+      <option [value]="tiposComponente.Disciplina">Disciplina</option>
+      <option [value]="tiposComponente.Turma">Turma</option>
+    </select>
+  </div>
+</div>
+
+<criar-curso *ngIf="tipoComponente == tiposComponente.Curso"></criar-curso>
+

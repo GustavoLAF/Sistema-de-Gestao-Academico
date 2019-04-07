@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AutenticacaoService } from '../services/autenticacao.service';
-import { Usuario } from '../models/usuario';
+import { Usuario } from '../_models/usuario';
+import { Cargos } from '../_enums/cargos.enum';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,9 +12,9 @@ import { Usuario } from '../models/usuario';
 })
 export class NavMenuComponent {
   estaLogado: Observable<boolean>;
-  usuario: Observable<Usuario>;
+  usuario: Usuario;
 
-  constructor(private authService: AutenticacaoService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.estaLogado = this.authService.estaLogado;
@@ -21,12 +22,15 @@ export class NavMenuComponent {
       .subscribe(usuario => this.usuario = usuario);
   }
 
-  isExpanded = false;
+  eAdmin(): boolean {
+    if (!this.usuario) { return; }
+    return (this.usuario.cargo == (Cargos.administrador || (Cargos.administrador | Cargos.coordenador)));
+  }
 
+  isExpanded = false;
   collapse() {
     this.isExpanded = false;
   }
-
   toggle() {
     this.isExpanded = !this.isExpanded;
   }

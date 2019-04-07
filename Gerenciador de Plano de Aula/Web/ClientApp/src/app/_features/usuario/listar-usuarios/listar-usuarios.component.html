@@ -1,0 +1,40 @@
+<h4>Gerenciar Usuários</h4><br />
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <!-- TODO: PIPE CPF E EMAIL -->
+      <th scope="col">CPF</th>
+      <th scope="col">Nome completo</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Data de nascimento</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.cpf }}</td>
+      <td>{{ usuario.nome }} {{ usuario.sobrenome }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>{{ usuario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <!-- TODO: Colocar tooltip nos botões -->
+        <div class="row">
+          <div class="col-md-3">
+            <button class="btn btn-info">
+              <i class="fa fa-pencil"></i>
+            </button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-danger">
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-primary float-right" [routerLink]='["/usuarios/criar"]'>
+  <i class="fa fa-plus"></i>
+  <span> Criar</span>
+</button>

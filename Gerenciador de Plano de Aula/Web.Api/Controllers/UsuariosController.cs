@@ -30,5 +30,45 @@ namespace Web.Api.Controllers
 
             return Ok(usuario);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var usuario = await _usuarioRepository.GetById(id);
+
+            if (usuario == null)
+                return NotFound();
+
+            return Ok(usuario);
+        }
+
+        [HttpGet("cargo/{cargo}")]
+        public async Task<IActionResult> GetByCargoAsync(Cargos cargo)
+        {
+            var usuarios = await _usuarioRepository.GetByCargoAsync(cargo);
+
+            if (usuarios == null)
+                return NotFound();
+
+            return Ok(usuarios);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var usuarios = await _usuarioRepository.GetAllAsync();
+
+            if (usuarios == null)
+                return NotFound();
+
+            return Ok(usuarios);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CriarAsync([FromBody] Usuario usuario)
+        {
+            //TODO: Validar pelo data annotations os models vindo do client
+            return Ok(await _usuarioRepository.CriarAsync(usuario));
+        }
     }
 }

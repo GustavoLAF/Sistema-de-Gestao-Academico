@@ -1,23 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { ErrorInterceptor } from './helpers/error.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
 
-import { AuthGuard } from './guards/auth.guard';
-import { AutenticacaoService } from './services/autenticacao.service';
-import { AlertService } from './services/alert.service';
+import { AuthGuard } from './_guards/auth.guard';
+import { AuthService } from './_services/auth.service';
+import { AlertService } from './_services/alert.service';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { LoginComponent } from './public/login/login.component';
-import { AlertComponent } from './directives/alert/alert.component';
-import { PaginaInicialComponent } from './features/pagina-inicial/pagina-inicial.component';
-import { UsuarioComponent } from './features/cadastros/usuario/usuario.component';
-import { MateriaComponent } from './features/cadastros/materia/materia.component';
-import { CursoComponent } from './features/cadastros/curso/curso.component';
+import { LoginComponent } from './login/login.component';
+import { AlertComponent } from './_directives/alert/alert.component';
+import { PaginaInicialComponent } from './pagina-inicial/pagina-inicial.component';
 
 @NgModule({
   declarations: [
@@ -25,20 +23,17 @@ import { CursoComponent } from './features/cadastros/curso/curso.component';
     NavMenuComponent,
     LoginComponent,
     AlertComponent,
-    PaginaInicialComponent,
-    UsuarioComponent,
-    MateriaComponent,
-    CursoComponent
+    PaginaInicialComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: PaginaInicialComponent, canActivate: [AuthGuard] },
-      //{ path: 'cadastros/curso', component: CursoComponent, canActivate: [AuthGuard] },
-      //{ path: 'cadastros/materia', component: MateriaComponent, canActivate: [AuthGuard] },
-      //{ path: 'cadastros/usuario', component: UsuarioComponent, canActivate: [AuthGuard] },
+      { path: 'usuarios', loadChildren: './_features/usuario/usuario.module#UsuarioModule', canActivate: [AuthGuard] },
+      { path: 'componente-curricular', loadChildren: './_features/parametros/componente-curricular/componente-curricular.module#ComponenteCurricularModule', canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
       { path: '**', redirectTo: '' }
     ])
@@ -46,7 +41,7 @@ import { CursoComponent } from './features/cadastros/curso/curso.component';
   providers: [
     AuthGuard,
     AlertService,
-    AutenticacaoService,
+    AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

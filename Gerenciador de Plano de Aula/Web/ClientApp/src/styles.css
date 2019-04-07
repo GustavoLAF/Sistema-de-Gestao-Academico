@@ -2,7 +2,12 @@
 .invalid-feedback {
   font-size: 12px;
 }
-.fa{
+
+.fa {
   width: 16px;
   height: 16px;
+}
+
+label {
+  margin: 0px;
 }

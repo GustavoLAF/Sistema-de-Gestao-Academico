@@ -21,27 +21,29 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\directives\**" />
+    <Compile Remove="ClientApp\src\app\features\**" />
+    <Compile Remove="ClientApp\src\app\helpers\**" />
+    <Compile Remove="ClientApp\src\app\models\**" />
+    <Compile Remove="ClientApp\src\app\public\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\directives\**" />
+    <Content Remove="ClientApp\src\app\features\**" />
+    <Content Remove="ClientApp\src\app\helpers\**" />
+    <Content Remove="ClientApp\src\app\models\**" />
+    <Content Remove="ClientApp\src\app\public\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\directives\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\features\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\helpers\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\models\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\public\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\directives\**" />
+    <None Remove="ClientApp\src\app\features\**" />
+    <None Remove="ClientApp\src\app\helpers\**" />
+    <None Remove="ClientApp\src\app\models\**" />
+    <None Remove="ClientApp\src\app\public\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ClientApp\src\app\helpers\error.interceptor.ts" />
-    <None Remove="ClientApp\src\app\models\credencial.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\app\features\cadastros\" />
-    <Folder Include="ClientApp\src\app\guards\" />
-    <Folder Include="ClientApp\src\app\directives\" />
-    <Folder Include="ClientApp\src\app\public\" />
-    <Folder Include="ClientApp\src\app\services\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\helpers\error.interceptor.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\credencial.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

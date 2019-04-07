@@ -35,11 +35,11 @@ namespace Web.Api
                 .WithExposedHeaders("WWWW-Authenticate");
             }));
 
-            // configure strongly typed settings objects
+            // Configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-            // configure jwt authentication
+            // Configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
@@ -61,6 +61,7 @@ namespace Web.Api
             });
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ICursoRepository, CursoRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
             {

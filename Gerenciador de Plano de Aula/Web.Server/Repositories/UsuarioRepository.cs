@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -47,6 +49,45 @@ namespace Web.Server.Repositories
 
             usuario.Senha = null;
             return usuario;
+        }
+
+        public async Task<Usuario> GetById(int id)
+        {
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (usuario == null)
+                return null;
+
+            return usuario;
+        }
+
+        public async Task<IEnumerable<Usuario>> GetByCargoAsync(Cargos cargo)
+        {
+            //TODO: Arrumar operação BITWISE
+            var usuarios = await _dbContext.Usuarios.Where(u => u.Cargo == cargo).ToArrayAsync();
+
+            if (usuarios == null)
+                return null;
+
+            return usuarios;
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAllAsync()
+        {
+            var usuarios = await _dbContext.Usuarios.ToArrayAsync();
+
+            if (!usuarios.Any())
+                return null;
+
+            return usuarios;
+        }
+
+        public async Task<int> CriarAsync(Usuario usuario)
+        {
+            await _dbContext.Usuarios.AddAsync(usuario);
+            _dbContext.SaveChanges();
+
+            return usuario.Id;
         }
     }
 }

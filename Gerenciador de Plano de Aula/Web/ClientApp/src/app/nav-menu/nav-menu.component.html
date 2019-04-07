@@ -1,21 +1,32 @@
 <header *ngIf="estaLogado | async">
-  <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3'>
+  <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3'>
     <div class="container">
-      <a class="navbar-brand" [routerLink]='["/"]'><!--Sistema de Gerenciamento de Plano de Aula-->Portal Gerenciador de Ensino</a>
+      <a class="navbar-brand" [routerLink]='["/"]'><!--Sistema de Gerenciamento de Plano de Aula-->Sistema de Gestão Acadêmico</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
               [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <!--<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Parâmetros
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#" [routerLink]='["/componente-curricular"]'>Componente Curricular</a>
+            </div>
+          </li>
+        </ul>
+      </div>-->
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
         <ul class="navbar-nav flex-grow">
-
           <li class="nav-item dropdown" [routerLinkActive]='["link-active"]'>
             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{ usuario.nomeCompleto }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Editar</a>
-              <a class="dropdown-item" href="#"><i class="fa fa-cog"></i> Configurações</a>
+              <a *ngIf="eAdmin()" class="dropdown-item" href="#" [routerLink]='["/usuarios"]'><i class="fa fa-cog"></i> Gerenciar usuários</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#" [routerLink]='["/login"]'><i class="fa fa-sign-out"></i> Sair</a>
             </div>

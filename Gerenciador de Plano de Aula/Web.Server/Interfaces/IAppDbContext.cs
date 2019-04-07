@@ -6,5 +6,7 @@ namespace Web.Server.Interfaces
     public interface IAppDbContext
     {
         DbSet<Usuario> Usuarios { get; set; }
+        DbSet<Curso> Cursos { get; set; }
+        DbSet<Disciplina> Disciplinas { get; set; }
     }
 }

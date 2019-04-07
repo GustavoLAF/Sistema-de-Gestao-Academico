@@ -13,6 +13,8 @@ namespace Web.Server
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
+        public DbSet<Turma> Turmas { get; set; }
+        public DbSet<Semestre> Semestres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

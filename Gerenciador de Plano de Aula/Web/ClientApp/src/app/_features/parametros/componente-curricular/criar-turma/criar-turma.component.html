@@ -1,0 +1,58 @@
+<br />
+<h4>Cadastrar Turma</h4><hr />
+<form name="form" (ngSubmit)="f.form.valid && criar(f)" #f="ngForm" novalidate>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label>Código</label>
+      <input type="text" class="form-control" name="codigo" [(ngModel)]="turma.codigo" #codigo="ngModel" [ngClass]="{ 'is-invalid': f.submitted && codigo.errors }" required />
+      <div *ngIf="f.submitted && !codigo.valid" class="invalid-feedback">Código é obrigatório</div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label>Período</label>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="matutino" class="custom-control-input" name="radio" [(ngModel)]="turma.periodo" [value]="periodos.matutino" required>
+        <label class="custom-control-label" for="matutino">Matutino</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="noturno" class="custom-control-input" name="radio" [(ngModel)]="turma.periodo" [value]="periodos.noturno" required>
+        <label class="custom-control-label" for="noturno">Noturno</label>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label for="curso">Curso</label><br />
+      <p-autoComplete name="curso" [(ngModel)]="curso" field="nome" (onSelect)="aoSelecionarCurso($event)" (onClear)="aoSelecionarCurso($event)"
+                      [suggestions]="cursos" (completeMethod)="buscarCursos($event)" [size]="40" emptyMessage="Nenhum resultado encontrado"
+                      [forceSelection]="true" [dropdown]="true" required>
+      </p-autoComplete>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label for="disciplina">Disciplina</label><br />
+      <p-autoComplete name="disciplina" [(ngModel)]="disciplina" field="nome" (onSelect)="aoSelecionarDisciplina($event)" (onClear)="aoSelecionarDisciplina($event)"
+                      [suggestions]="disciplinas" (completeMethod)="buscarDisciplinas($event)" [size]="40" emptyMessage="Nenhum resultado encontrado"
+                      [forceSelection]="true" [dropdown]="true" required>
+      </p-autoComplete>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label for="semestre">Semestre</label><br />
+      <p-autoComplete name="semestre" [(ngModel)]="semestre" field="codigo" (onSelect)="aoSelecionarSemestre($event)" (onClear)="aoSelecionarSemestre($event)"
+                      [suggestions]="semestres" (completeMethod)="buscarSemestres($event)" [size]="40" emptyMessage="Nenhum resultado encontrado"
+                      [forceSelection]="true" [dropdown]="true" required>
+      </p-autoComplete>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success float-right">
+    <i class="fa fa-save mr-2" *ngIf="!salvando"></i>
+    <i class="spinner-border spinner-border-sm mr-2" *ngIf="salvando"></i>
+    <span>Salvar</span>
+  </button>
+</form>
+
+

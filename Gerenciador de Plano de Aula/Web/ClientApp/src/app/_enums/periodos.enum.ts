@@ -1,4 +1,4 @@
 export enum Periodos {
-  diurno = 1,
+  matutino = 1,
   noturno = 2
 }

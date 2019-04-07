@@ -4,6 +4,7 @@ export class Turma {
   id: number;
   codigo: string;
   periodo: Periodos;
+  cursoId: number;
   disciplinaId: number;
   semestreId: number;
 }

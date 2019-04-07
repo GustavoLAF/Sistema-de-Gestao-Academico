@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Web.Server.Models
 {
-    class Semestre
+    public class Semestre
     {
+        public int Id { get; set; }
+        [Required]
+        public string Codigo { get; set; }
     }
 }

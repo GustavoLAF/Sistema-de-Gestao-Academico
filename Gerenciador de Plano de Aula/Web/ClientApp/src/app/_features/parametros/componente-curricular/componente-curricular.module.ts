@@ -7,9 +7,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { AdminGuard } from '../../../_guards/admin.guard';
 import { CriarCursoComponent } from './criar-curso/criar-curso.component';
-import { CursoService } from './../../../_services/curso.service';
+import { CursoService } from '../../../_services/curso.service';
 import { ComponenteCurricularComponent } from './componente-curricular/componente-curricular.component';
 import { CriarDisciplinaComponent } from './criar-disciplina/criar-disciplina.component';
+import { CriarTurmaComponent } from './criar-turma/criar-turma.component';
+import { DisciplinaService } from '../../../_services/disciplina.service';
+import { TurmaService } from '../../../_services/turma.service';
 
 @NgModule({
   imports: [
@@ -23,11 +26,14 @@ import { CriarDisciplinaComponent } from './criar-disciplina/criar-disciplina.co
   declarations: [
     CriarCursoComponent,
     ComponenteCurricularComponent,
-    CriarDisciplinaComponent
+    CriarDisciplinaComponent,
+    CriarTurmaComponent
   ],
   providers: [
     AdminGuard,
-    CursoService
+    CursoService,
+    DisciplinaService,
+    TurmaService
   ]
 })
 export class ComponenteCurricularModule { }

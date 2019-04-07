@@ -2,7 +2,7 @@
 {
     public enum Periodos
     {
-        Diurno = 1,
+        Matutino = 1,
         Noturno = 2
     }
 }

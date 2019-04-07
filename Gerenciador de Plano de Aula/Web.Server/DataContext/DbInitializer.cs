@@ -82,6 +82,118 @@ namespace Web.Server.DataContext
                 });
             }
 
+            if (!dbContext.Disciplinas.Any())
+            {
+                dbContext.Disciplinas.AddRange(
+                new Disciplina
+                {
+                    Nome = "Algoritmos e Programação",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Lógica Computacional I",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Lógica Computacional II",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Rede de Computadores I",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Rede de Computadores II",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Estrutura de Dados I",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Estrutura de Dados II",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Processamento de Sinais I",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Eletrônica Digital I",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Sistemas Operacionais",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Programação Orientada a Objetos I",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Programação Orientada a Objetos II",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                },
+                new Disciplina
+                {
+                    Nome = "Computação Gráfica",
+                    PesoPratica = 50,
+                    PesoTeoria = 50
+                });
+            }
+
+            if (!dbContext.Semestres.Any())
+            {
+                dbContext.Semestres.AddRange(
+                new Semestre
+                {
+                    Codigo = "20171"
+                },
+                new Semestre
+                {
+                    Codigo = "20172"
+                },
+                new Semestre
+                {
+                    Codigo = "20181"
+                },
+                new Semestre
+                {
+                    Codigo = "20182"
+                },
+                new Semestre
+                {
+                    Codigo = "20191"
+                },
+                new Semestre
+                {
+                    Codigo = "20192"
+                });
+            }
+
             dbContext.SaveChanges();
         }
     }

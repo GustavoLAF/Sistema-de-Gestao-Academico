@@ -32,6 +32,24 @@ namespace Web.Server.Repositories
             }
         }
 
+        public async Task<IEnumerable<Disciplina>> FindByNomeAsync(string q = null, int pagesize = 10)
+        {
+            var sql = $@"SELECT TOP(@{nameof(pagesize)}) D.*
+                           FROM Disciplinas D
+                          WHERE (@{nameof(q)} IS NULL OR D.Nome LIKE CONCAT('%',@{nameof(q)},'%'))
+                          ORDER BY D.Nome";
+
+            using (var connection = _connectionFactory.Invoke())
+            {
+                var disciplinas = await connection.QueryAsync<Disciplina>(sql, new { q, pagesize });
+
+                if (disciplinas == null)
+                    return null;
+
+                return disciplinas;
+            }
+        }
+
         public async Task<IEnumerable<Disciplina>> GetAllAsync()
         {
             var sql = "SELECT D.* FROM Disciplinas D";

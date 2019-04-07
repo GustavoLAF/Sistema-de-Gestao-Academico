@@ -18,6 +18,17 @@ namespace Web.Api.Controllers
             this._cursoRepository = cursoRepository ?? throw new System.ArgumentNullException(nameof(cursoRepository));
         }
 
+        [HttpGet("find")]
+        public async Task<IActionResult> FindByNomeAsync(string q = null, int pagesize = 10)
+        {
+            var cursos = await _cursoRepository.FindByNomeAsync(q, pagesize);
+
+            if (cursos == null)
+                return NotFound();
+
+            return Ok(cursos);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {

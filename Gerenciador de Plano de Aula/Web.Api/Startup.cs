@@ -66,6 +66,8 @@ namespace Web.Api
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ICursoRepository, CursoRepository>();
             services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
+            services.AddScoped<ITurmaRepository, TurmaRepository>();
+            services.AddScoped<ISemestreRepository, SemestreRepository>();
 
             services.AddDbContext<AppDbContext>(options =>
             {

@@ -24,7 +24,15 @@ export class NavMenuComponent {
 
   eAdmin(): boolean {
     if (!this.usuario) { return; }
-    return (this.usuario.cargo == (Cargos.administrador || (Cargos.administrador | Cargos.coordenador)));
+
+    switch (this.usuario.cargo) {
+      case Cargos.administrador:
+        return true;
+      case Cargos.administrador | Cargos.coordenador:
+        return true;
+      default:
+        return false;
+    }
   }
 
   isExpanded = false;

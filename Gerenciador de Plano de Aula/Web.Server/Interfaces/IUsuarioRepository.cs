@@ -8,8 +8,8 @@ namespace Web.Server.Interfaces
     {
         Task<Usuario> AutenticarAsync(string email, string senha);
         Task<Usuario> GetById(int id);
-        Task<IEnumerable<Usuario>> GetByCargoAsync(Cargos cargo);
+        Task<IEnumerable<Usuario>> FindByCargoAsync(Cargos cargo, string q = null, int pagesize = 10);
         Task<IEnumerable<Usuario>> GetAllAsync();
-        Task<int> CriarAsync(Usuario usuario);
+        Task CriarAsync(Usuario usuario);
     }
 }

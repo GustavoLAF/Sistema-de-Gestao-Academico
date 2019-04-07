@@ -43,9 +43,9 @@ namespace Web.Api.Controllers
         }
 
         [HttpGet("cargo/{cargo}")]
-        public async Task<IActionResult> GetByCargoAsync(Cargos cargo)
+        public async Task<IActionResult> FindByCargoAsync(Cargos cargo, string q = null, int pagesize = 10)
         {
-            var usuarios = await _usuarioRepository.GetByCargoAsync(cargo);
+            var usuarios = await _usuarioRepository.FindByCargoAsync(cargo, q, pagesize);
 
             if (usuarios == null)
                 return NotFound();
@@ -67,8 +67,14 @@ namespace Web.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarAsync([FromBody] Usuario usuario)
         {
-            //TODO: Validar pelo data annotations os models vindo do client
-            return Ok(await _usuarioRepository.CriarAsync(usuario));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _usuarioRepository.CriarAsync(usuario);
+
+            return Ok();
         }
     }
 }

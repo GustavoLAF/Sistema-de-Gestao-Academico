@@ -1,5 +1,3 @@
-import { Curso } from "./curso";
-
 export class Disciplina {
   id: number;
   nome: string;
@@ -7,5 +5,8 @@ export class Disciplina {
   pesoPratica: number;
   cursoId: number;
 
-  curso: Curso;
+  constructor() {
+    this.pesoPratica = 0;
+    this.pesoTeoria = 0;
+  }
 }

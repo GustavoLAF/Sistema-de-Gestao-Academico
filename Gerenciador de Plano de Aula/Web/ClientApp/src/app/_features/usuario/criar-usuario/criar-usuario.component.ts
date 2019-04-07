@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import swal from 'sweetalert';
 
 import { Usuario } from '../../../_models/usuario';
 import { Cargos } from '../../../_enums/cargos.enum';
 import { UsuarioService } from '../../../_services/usuario.service';
-import { NgForm } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-criar-usuario',
@@ -61,7 +61,7 @@ export class CriarUsuarioComponent implements OnInit {
     this.usuarioService.criar(this.usuario)
       .pipe(finalize(() => this.salvando = false))
       .subscribe(
-        id => {
+        ok => {
           swal({
             title: "Sucesso!",
             text: "Usuário cadastrado.",

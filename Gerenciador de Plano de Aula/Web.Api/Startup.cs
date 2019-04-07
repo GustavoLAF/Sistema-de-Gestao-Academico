@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using Web.Server;
 using Web.Server.Helpers;
@@ -67,6 +70,11 @@ namespace Web.Api
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DbContextConnection"),
                     o => o.MigrationsAssembly("Web.Server"));
+            });
+
+            services.AddSingleton<Func<IDbConnection>>(c => () =>
+            {
+                return new SqlConnection(Configuration.GetConnectionString("DbContextConnection"));
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

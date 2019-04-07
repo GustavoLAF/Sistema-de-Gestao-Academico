@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Server.Interfaces;
@@ -10,29 +12,39 @@ namespace Web.Server.Repositories
 {
     public class CursoRepository : ICursoRepository
     {
-        private readonly AppDbContext _dbContext;
+        private readonly Func<IDbConnection> _connectionFactory;
 
-        public CursoRepository(AppDbContext dbContext)
+        public CursoRepository(Func<IDbConnection> connectionFactory)
         {
-            this._dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
-        public async Task<int> CriarAsync(Curso curso)
+        public async Task CriarAsync(Curso curso)
         {
-            await _dbContext.Cursos.AddAsync(curso);
-            _dbContext.SaveChanges();
+            var sql = $@"INSERT INTO Cursos (Nome, Descricao, CoordenadorId) 
+                         VALUES (@{nameof(curso.Nome)}, 
+                                 @{nameof(curso.Descricao)}, 
+                                 @{nameof(curso.CoordenadorId)})";
 
-            return curso.Id;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                await connection.ExecuteAsync(sql, new { curso.Nome, curso.Descricao, curso.CoordenadorId });
+            }
         }
 
         public async Task<IEnumerable<Curso>> GetAllAsync()
         {
-            var cursos = await _dbContext.Cursos.ToArrayAsync();
+            var sql = "SELECT C.* FROM Cursos C";
 
-            if (!cursos.Any())
-                return null;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                var cursos = await connection.QueryAsync<Curso>(sql);
 
-            return cursos;
+                if (!cursos.Any())
+                    return null;
+
+                return cursos;
+            }
         }
     }
 }

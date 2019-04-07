@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComponenteCurricularComponent implements OnInit {
 
-  tipoComponente: TipoComponente;
+  tipoComponente: TipoComponente = 0;
   tiposComponente = TipoComponente;
 
   constructor() { }

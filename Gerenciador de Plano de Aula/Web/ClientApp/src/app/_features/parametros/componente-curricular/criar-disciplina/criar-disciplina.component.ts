@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Disciplina } from '../../../../_models/disciplina';
+
 @Component({
-  selector: 'app-criar-disciplina',
+  selector: 'criar-disciplina',
   templateUrl: './criar-disciplina.component.html',
   styleUrls: ['./criar-disciplina.component.css']
 })
 export class CriarDisciplinaComponent implements OnInit {
 
-  constructor() { }
+  disciplina: Disciplina;
+
+  constructor() {
+    this.disciplina = new Disciplina();
+  }
 
   ngOnInit() {
   }

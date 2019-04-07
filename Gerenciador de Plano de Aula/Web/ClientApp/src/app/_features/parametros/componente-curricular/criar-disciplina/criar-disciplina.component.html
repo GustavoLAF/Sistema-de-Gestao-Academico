@@ -4,27 +4,17 @@
   <div class="row form-group">
     <div class="col-md-4">
       <label>Nome</label>
-      <input type="text" class="form-control" name="nome" [(ngModel)]="curso.nome" #nome="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nome.errors }" required />
+      <input type="text" class="form-control" name="nome" [(ngModel)]="disciplina.nome" #nome="ngModel" [ngClass]="{ 'is-invalid': f.submitted && nome.errors }" required />
       <div *ngIf="f.submitted && !nome.valid" class="invalid-feedback">Nome é obrigatório</div>
     </div>
   </div>
-  <div class="row form-group">
+  <!--<div class="row form-group">
     <div class="col-md-4">
       <label for="descricao">Peso</label>
       <input type="text" class="form-control" name="descricao" [(ngModel)]="curso.descricao" #descricao="ngModel" [ngClass]="{ 'is-invalid': f.submitted && descricao.errors }" required />
       <div *ngIf="f.submitted && !descricao.valid" class="invalid-feedback">Descrição é obrigatório</div>
     </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-4">
-      <label for="coordenador">Coordenador</label>
-      <select class="form-control" [(ngModel)]="curso.coordenadorId" #coordenador="ngModel" name="coordenador" [ngClass]="{ 'is-invalid': f.submitted && coordenador.errors }" required>
-        <option value="0" hidden>Selecione...</option>
-        <option *ngFor="let c of coordenadores" [value]="c.id">{{ c.nome }} {{ c.sobrenome }}</option>
-      </select>
-      <div *ngIf="f.submitted && !coordenador.valid" class="invalid-feedback">Coordenador é obrigatório</div>
-    </div>
-  </div>
+  </div>-->
   <button type="submit" class="btn btn-success float-right"><i class="fa fa-save"></i> Salvar</button>
 </form>
 

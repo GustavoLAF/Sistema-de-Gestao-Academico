@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
@@ -21,8 +22,14 @@ export class UsuarioService {
   //    }));
   //}
 
-  getByCargo(cargo: Cargos): Observable<Usuario[]> {
-    return this.authService.get(`${environment.WebApiEndpoint}/usuarios/cargo/${cargo}`)
+  findByCargo(cargo: Cargos, q: string, pagesize: number): Observable<Usuario[]> {
+    var params = new HttpParams();
+    if (q) {
+      params = params.set("q", q);
+    }
+    params = params.set("pagesize", pagesize.toString());
+
+    return this.authService.get(`${environment.WebApiEndpoint}/usuarios/cargo/${cargo}`, params)
       .pipe(tap((usuarios: Usuario[]) => usuarios));
   }
 

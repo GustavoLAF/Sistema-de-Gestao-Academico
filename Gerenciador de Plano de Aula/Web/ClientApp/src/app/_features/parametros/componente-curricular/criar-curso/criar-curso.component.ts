@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
+import swal from 'sweetalert';
 
 import { Curso } from '../../../../_models/curso';
 import { CursoService } from '../../../../_services/curso.service';
@@ -14,8 +16,9 @@ import { Cargos } from '../../../../_enums/cargos.enum';
 })
 export class CriarCursoComponent implements OnInit {
 
-  coordenadores: Usuario[];
   curso: Curso;
+  coordenadores: Usuario[];
+  salvando: boolean;
 
   constructor(private usuarioService: UsuarioService,
     private cursoService: CursoService) {
@@ -23,31 +26,41 @@ export class CriarCursoComponent implements OnInit {
     this.coordenadores = [];
   }
 
-  ngOnInit() {
-    this.getCoordenadores();
-  }
+  ngOnInit() { }
 
-  getCoordenadores() {
+  buscarCoordenadores(q): void {
     this.usuarioService
-      .getByCargo(Cargos.coordenador)
+      .findByCargo(Cargos.coordenador, q.query.toLowerCase(), 10)
       .subscribe(
         coordenadores => {
           this.coordenadores = coordenadores;
         }, error => {
           this.coordenadores = [];
-        });
+        }
+      );
   }
-
+  aoSelecionarCoordenador(coordenador: Usuario) {
+    this.curso.coordenadorId = coordenador.id;
+  }
   criar(f: NgForm) {
-    this.cursoService
-      .criar(this.curso)
+    this.salvando = true;
+    this.cursoService.criar(this.curso)
+      .pipe(finalize(() => this.salvando = false))
       .subscribe(
-        id => {
-          alert('Curso criado com sucesso!');
-          console.log('curso criado, id:', id);
-          f.resetForm();
+        ok => {
+          swal({
+            title: "Sucesso!",
+            text: "Curso cadastrado.",
+            icon: "success"
+          }).then(() => {
+            f.resetForm();
+          });
         }, error => {
-          console.log('error ao criar curso', error);
+          swal({
+            title: "Ops!",
+            text: "Houve algum problema... Tente novamente mais tarde.",
+            icon: "warning"
+          });
         });
   }
 

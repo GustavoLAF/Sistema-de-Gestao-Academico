@@ -17,8 +17,7 @@ import { CriarDisciplinaComponent } from './criar-disciplina/criar-disciplina.co
     FormsModule,
     AutoCompleteModule,
     RouterModule.forChild([
-      { path: '', component: ComponenteCurricularComponent, canActivate: [AdminGuard] },
-      //{ path: 'criar', component: CriarCursoComponent, canActivate: [AdminGuard] }
+      { path: '', component: ComponenteCurricularComponent, canActivate: [AdminGuard] }
     ])
   ],
   declarations: [

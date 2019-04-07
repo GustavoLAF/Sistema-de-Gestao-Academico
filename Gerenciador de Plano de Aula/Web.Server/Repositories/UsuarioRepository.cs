@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -17,20 +18,29 @@ namespace Web.Server.Repositories
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly AppSettings _appSettings;
-        private readonly AppDbContext _dbContext;
+        private readonly Func<IDbConnection> _connectionFactory;
 
-        public UsuarioRepository(IOptions<AppSettings> appSettings, AppDbContext dbContext)
+        public UsuarioRepository(IOptions<AppSettings> appSettings, Func<IDbConnection> connectionFactory)
         {
             this._appSettings = appSettings.Value ?? throw new ArgumentNullException(nameof(appSettings));
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
         public async Task<Usuario> AutenticarAsync(string email, string senha)
         {
-            var usuario = await Task.Run(() => _dbContext.Usuarios.SingleOrDefault(u => u.Email == email && u.Senha == senha));
+            var sql = $@"SELECT U.* 
+                           FROM Usuarios U
+                          WHERE U.Email = @{nameof(email)}
+                            AND U.Senha = @{nameof(senha)}";
 
-            if (usuario == null)
-                return null;
+            Usuario usuario = null;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                usuario = await connection.QuerySingleOrDefaultAsync<Usuario>(sql, new { email, senha });
+
+                if (usuario == null)
+                    return null;
+            }
 
             //JWT Token
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -53,41 +63,72 @@ namespace Web.Server.Repositories
 
         public async Task<Usuario> GetById(int id)
         {
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+            var sql = $@"SELECT U.* 
+                           FROM Usuarios U
+                          WHERE U.Id = @{nameof(id)}";
 
-            if (usuario == null)
-                return null;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                var usuario = await connection.QueryFirstOrDefaultAsync<Usuario>(sql);
 
-            return usuario;
+                if (usuario == null)
+                    return null;
+
+                return usuario;
+            }
         }
 
-        public async Task<IEnumerable<Usuario>> GetByCargoAsync(Cargos cargo)
+        public async Task<IEnumerable<Usuario>> FindByCargoAsync(Cargos cargo, string q = null, int pagesize = 10)
         {
             //TODO: Arrumar operação BITWISE
-            var usuarios = await _dbContext.Usuarios.Where(u => u.Cargo == cargo).ToArrayAsync();
+            var sql = $@"SELECT TOP(@{nameof(pagesize)}) U.*
+                           FROM Usuarios U
+                          WHERE U.Cargo = @{nameof(cargo)}
+                            AND (@{nameof(q)} IS NULL OR (U.Nome LIKE CONCAT('%',@{nameof(q)},'%') 
+                                                      OR  U.Sobrenome LIKE CONCAT('%',@{nameof(q)},'%')))
+                          ORDER BY U.Nome";
 
-            if (usuarios == null)
-                return null;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                var usuarios = await connection.QueryAsync<Usuario>(sql, new { cargo = (int)cargo, q, pagesize });
 
-            return usuarios;
+                if (usuarios == null)
+                    return null;
+
+                return usuarios;
+            }
         }
 
         public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
-            var usuarios = await _dbContext.Usuarios.ToArrayAsync();
+            var sql = "SELECT U.* FROM Usuarios U";
 
-            if (!usuarios.Any())
-                return null;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                var usuarios = await connection.QueryAsync<Usuario>(sql);
 
-            return usuarios;
+                if (!usuarios.Any())
+                    return null;
+
+                return usuarios;
+            }
         }
 
-        public async Task<int> CriarAsync(Usuario usuario)
+        public async Task CriarAsync(Usuario usuario)
         {
-            await _dbContext.Usuarios.AddAsync(usuario);
-            _dbContext.SaveChanges();
+            var sql = $@"INSERT INTO Usuarios (Nome, Sobrenome, Cpf, DataNascimento, Email, Cargo, Senha) 
+                         VALUES (@{nameof(usuario.Nome)}, 
+                                 @{nameof(usuario.Sobrenome)}, 
+                                 @{nameof(usuario.Cpf)}, 
+                                 @{nameof(usuario.DataNascimento)},
+                                 @{nameof(usuario.Email)},
+                                 @{nameof(usuario.Cargo)},
+                                 @{nameof(usuario.Senha)})";
 
-            return usuario.Id;
+            using (var connection = _connectionFactory.Invoke())
+            {
+                await connection.ExecuteAsync(sql, new { usuario.Nome, usuario.Sobrenome, usuario.Cpf, usuario.DataNascimento, usuario.Email, usuario.Cargo, usuario.Senha });
+            }
         }
     }
 }

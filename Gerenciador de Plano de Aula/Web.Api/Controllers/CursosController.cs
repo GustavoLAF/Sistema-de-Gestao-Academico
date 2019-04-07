@@ -32,7 +32,14 @@ namespace Web.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarAsync([FromBody] Curso curso)
         {
-            return Ok(await _cursoRepository.CriarAsync(curso));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _cursoRepository.CriarAsync(curso);
+
+            return Ok();
         }
     }
 }

@@ -18,13 +18,21 @@
   <div class="row form-group">
     <div class="col-md-4">
       <label for="coordenador">Coordenador</label>
-      <select class="form-control" [(ngModel)]="curso.coordenadorId" #coordenador="ngModel" name="coordenador" [ngClass]="{ 'is-invalid': f.submitted && coordenador.errors }" required>
-        <option value="0" hidden>Selecione...</option>
-        <option *ngFor="let c of coordenadores" [value]="c.id">{{ c.nome }} {{ c.sobrenome }}</option>
-      </select>
-      <div *ngIf="f.submitted && !coordenador.valid" class="invalid-feedback">Coordenador é obrigatório</div>
+      <p-autoComplete name="coordenador" [(ngModel)]="coordenador" field="nome" (onSelect)="aoSelecionarCoordenador($event)" (onClear)="aoSelecionarCoordenador($event)"
+                      [suggestions]="coordenadores" (completeMethod)="buscarCoordenadores($event)" [size]="40"
+                      [forceSelection]="true" [dropdown]="true" required>
+        <ng-template let-coordenador pTemplate="item">
+          <div class="ui-helper-clearfix">
+            <div>{{ coordenador?.nome }} {{ coordenador?.sobrenome }}</div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
     </div>
   </div>
-  <button type="submit" class="btn btn-success float-right"><i class="fa fa-save"></i> Salvar</button>
+  <button type="submit" class="btn btn-success float-right">
+    <i class="fa fa-save mr-2" *ngIf="!salvando"></i>
+    <i class="spinner-border spinner-border-sm mr-2" *ngIf="salvando"></i>
+    <span>Salvar</span>
+  </button>
 </form>
 

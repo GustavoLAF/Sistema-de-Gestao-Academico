@@ -1,1 +1,1 @@
-# Sistema-de-Gestão-Academico
+# Sistema-de-Gestão-Acadêmico

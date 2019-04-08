@@ -1,4 +1,4 @@
-# Gerenciador_de_Plano_de_Aula
+# Sistema_de_Gestao_Academico
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 

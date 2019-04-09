@@ -20,11 +20,15 @@ export class AdminGuard implements CanActivate {
       .pipe(
         take(1),
         map((usuario: Usuario) => {
-          if ((usuario.cargo == (Cargos.administrador || (Cargos.coordenador | Cargos.administrador)))) {
-            return true;
+          switch (usuario.cargo) {
+            case Cargos.administrador:
+              return true;
+            case Cargos.administrador | Cargos.coordenador:
+              return true;
+            default:
+              this.router.navigate(['/']);
+              return false;
           }
-          this.router.navigate(['/']);
-          return false;
         }));
   }
 }

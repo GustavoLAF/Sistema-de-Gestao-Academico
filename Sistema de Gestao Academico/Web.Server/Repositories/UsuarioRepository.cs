@@ -82,8 +82,9 @@ namespace Web.Server.Repositories
         {
             //TODO: Arrumar operação BITWISE
             var sql = $@"SELECT TOP(@{nameof(pagesize)}) U.*
+                         
                            FROM Usuarios U
-                          WHERE U.Cargo = @{nameof(cargo)}
+                          WHERE U.Cargo = U.Cargo | @{nameof(cargo)}
                             AND (@{nameof(q)} IS NULL OR (U.Nome LIKE CONCAT('%',@{nameof(q)},'%') 
                                                       OR  U.Sobrenome LIKE CONCAT('%',@{nameof(q)},'%')))
                           ORDER BY U.Nome";

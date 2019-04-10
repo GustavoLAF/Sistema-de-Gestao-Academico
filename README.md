@@ -1,7 +1,7 @@
 # Sistema de Gestão Acadêmico
 
 Objetivo:
-Este Manual de Referência tem como objetivo ser um guia compreensivo do Sistema de Gestão Acadêmico da FACENS.
+Este Manual de Referência tem como objetivo ser uma ferramenta para melhor gestão de planos de aula e planos de ensino da FACENS.
 
 Problematização:
 Esse projeto veio de uma necessidade abordada pela instituição de ensino na qual todo o gerenciamento de planos de ensino e planos de aula são feitos de forma arcaica e manual, necessitando muito tempo dos coordenadores de cada curso para avaliação e muitas vezes tornando todo o processo deficiente.

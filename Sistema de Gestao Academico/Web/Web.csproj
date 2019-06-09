@@ -11,6 +11,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RootNamespace>Gerenciador_de_Plano_de_Aula</RootNamespace>
+    <UserSecretsId>e9278e8f-d6d0-4ed6-aa8f-bfffb2062ebb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,6 +9,7 @@ export class Usuario {
   senha: string;
   cargo: Cargos;
   token: string;
+  cpf: string;
 
   get nomeCompleto(): string {
     return `${this.nome} ${this.sobrenome}`;

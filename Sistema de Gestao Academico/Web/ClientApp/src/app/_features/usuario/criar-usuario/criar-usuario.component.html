@@ -47,17 +47,17 @@
     <div class="col-md-6">
       <label>Cargos</label><br />
       <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" name="administrador" [(ngModel)]="administrador" id="administrador"
+        <input type="checkbox" class="custom-control-input" name="administrador" id="administrador"
                (ngModelChange)="aoSelecionarCargo($event, cargos.administrador)" [disabled]="seForProfessor()" />
         <label class="custom-control-label" for="administrador">Administrador</label>
       </div>
       <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" name="coordenador" [(ngModel)]="coordenador" id="coordenador"
+        <input type="checkbox" class="custom-control-input" name="coordenador" id="coordenador"
                (ngModelChange)="aoSelecionarCargo($event, cargos.coordenador)" />
         <label class="custom-control-label" for="coordenador">Coordenador</label>
       </div>
       <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" name="professor" [(ngModel)]="professor" id="professor"
+        <input type="checkbox" class="custom-control-input" name="professor" id="professor"
                (ngModelChange)="aoSelecionarCargo($event, cargos.professor)" [disabled]="seForAdmin()" />
         <label class="custom-control-label" for="professor">Professor</label>
       </div>

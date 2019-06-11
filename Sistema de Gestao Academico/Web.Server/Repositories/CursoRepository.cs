@@ -50,18 +50,34 @@ namespace Web.Server.Repositories
             }
         }
 
-        public async Task<IEnumerable<Curso>> GetAllAsync()
+        public async Task<PagedList<Curso>> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var sql = "SELECT C.* FROM Cursos C";
+            var sql = $@"SELECT C.* 
+                           FROM Cursos C
+                          WHERE (@{nameof(q)} IS NULL OR C.Nome LIKE CONCAT('%',@{nameof(q)},'%'))
+                          ORDER BY C.Nome
+                         OFFSET @{nameof(pagesize)} * (@{nameof(page)} - 1) ROWS
+                     FETCH NEXT @{nameof(pagesize)} ROWS ONLY";
+            var sqlCount = $@"  
+                   SELECT COUNT(*) as 'Quantidade Item'		                 
+                     FROM Cursos C
+                    WHERE (@{nameof(q)} IS NULL OR C.Nome LIKE CONCAT('%',@{nameof(q)},'%'))";
 
             using (var connection = _connectionFactory.Invoke())
             {
-                var cursos = await connection.QueryAsync<Curso>(sql);
+                var cursos = await connection.QueryAsync<Curso>(sql, new { q, page, pagesize });
+                var totalCursos = await connection.QueryFirstAsync<int>(sqlCount, new { q });
 
                 if (!cursos.Any())
                     return null;
 
-                return cursos;
+                return new PagedList<Curso>
+                {
+                    Items = cursos,
+                    PageNumber = page,
+                    PageSize = pagesize,
+                    TotalCount = totalCursos
+                };
             }
         }
     }

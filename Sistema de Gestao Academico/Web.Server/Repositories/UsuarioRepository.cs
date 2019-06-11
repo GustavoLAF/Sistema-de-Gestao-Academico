@@ -80,7 +80,6 @@ namespace Web.Server.Repositories
 
         public async Task<IEnumerable<Usuario>> FindByCargoAsync(Cargos cargo, string q = null, int pagesize = 10)
         {
-            //TODO: Arrumar operação BITWISE
             var sql = $@"SELECT TOP(@{nameof(pagesize)}) U.*
                          
                            FROM Usuarios U

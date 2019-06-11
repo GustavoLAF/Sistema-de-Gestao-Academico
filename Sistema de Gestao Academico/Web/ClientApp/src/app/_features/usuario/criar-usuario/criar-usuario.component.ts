@@ -16,6 +16,9 @@ export class CriarUsuarioComponent implements OnInit {
 
   usuario: Usuario;
   cargos = Cargos;
+  coordenador: Usuario;
+  professor: Usuario;
+  administrador: Usuario;
   salvando: boolean;
 
   constructor(private usuarioService: UsuarioService) {

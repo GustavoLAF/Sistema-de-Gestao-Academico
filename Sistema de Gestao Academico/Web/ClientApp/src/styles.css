@@ -15,3 +15,21 @@ label {
 .ui-autocomplete-dropdown {
   height: 35px !important;
 }
+
+.table-paginator {
+  margin-bottom: -1px;
+}
+
+.table-header {
+  font-size: 14px;
+  background-color: #f4f4f4;
+}
+
+.table-body {
+  font-size: 13px;
+}
+
+.ui-paginator .ui-dropdown {
+  height: 33px !important;
+}
+

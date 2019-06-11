@@ -19,9 +19,9 @@ namespace Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var turmas = await _turmaRepository.GetAllAsync();
+            var turmas = await _turmaRepository.FindAsync(q, page, pagesize);
 
             if (turmas == null)
                 return NotFound();

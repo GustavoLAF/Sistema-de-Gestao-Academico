@@ -50,18 +50,34 @@ namespace Web.Server.Repositories
             }
         }
 
-        public async Task<IEnumerable<Disciplina>> GetAllAsync()
+        public async Task<PagedList<Disciplina>> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var sql = "SELECT D.* FROM Disciplinas D";
+            var sql = $@"SELECT D.* 
+                           FROM Disciplinas D
+                          WHERE (@{nameof(q)} IS NULL OR D.Nome LIKE CONCAT('%',@{nameof(q)},'%'))
+                          ORDER BY D.Nome
+                         OFFSET @{nameof(pagesize)} * (@{nameof(page)} - 1) ROWS
+                     FETCH NEXT @{nameof(pagesize)} ROWS ONLY";
+            var sqlCount = $@"  
+                   SELECT COUNT(*) as 'Quantidade Item'		                 
+                     FROM Disciplinas D
+                    WHERE (@{nameof(q)} IS NULL OR D.Nome LIKE CONCAT('%',@{nameof(q)},'%'))";
 
             using (var connection = _connectionFactory.Invoke())
             {
-                var disciplinas = await connection.QueryAsync<Disciplina>(sql);
+                var disciplinas = await connection.QueryAsync<Disciplina>(sql, new { q, page, pagesize });
+                var totalDisciplinas = await connection.QueryFirstAsync<int>(sqlCount, new { q });
 
                 if (!disciplinas.Any())
                     return null;
 
-                return disciplinas;
+                return new PagedList<Disciplina>
+                {
+                    Items = disciplinas,
+                    PageNumber = page,
+                    PageSize = pagesize,
+                    TotalCount = totalDisciplinas
+                };
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,18 +32,35 @@ namespace Web.Server.Repositories
             }
         }
 
-        public async Task<IEnumerable<Turma>> GetAllAsync()
+        public async Task<PagedList<Turma>> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var sql = "SELECT T.* FROM Turmas T";
+            var sql = $@"SELECT T.* 
+                           FROM Turmas T
+                          WHERE (@{nameof(q)} IS NULL OR T.Codigo LIKE CONCAT('%',@{nameof(q)},'%'))
+                          ORDER BY T.Codigo
+                         OFFSET @{nameof(pagesize)} * (@{nameof(page)} - 1) ROWS
+                     FETCH NEXT @{nameof(pagesize)} ROWS ONLY";
+            var sqlCount = $@"  
+                   SELECT COUNT(*) as 'Quantidade Item'		                 
+                     FROM Turmas T
+                    WHERE (@{nameof(q)} IS NULL OR T.Codigo LIKE CONCAT('%',@{nameof(q)},'%'))";
 
             using (var connection = _connectionFactory.Invoke())
             {
-                var turmas = await connection.QueryAsync<Turma>(sql);
+                var turmas = await connection.QueryAsync<Turma>(sql, new { q, page, pagesize });
+                var totalTurmas = await connection.QueryFirstAsync<int>(sqlCount, new { q });
 
                 if (!turmas.Any())
                     return null;
 
-                return turmas;
+
+                return new PagedList<Turma>
+                {
+                    Items = turmas,
+                    PageNumber = page,
+                    PageSize = pagesize,
+                    TotalCount = totalTurmas
+                };
             }
         }
     }

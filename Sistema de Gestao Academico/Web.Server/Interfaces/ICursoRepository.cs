@@ -7,7 +7,7 @@ namespace Web.Server.Interfaces
     public interface ICursoRepository
     {
         Task<IEnumerable<Curso>> FindByNomeAsync(string q = null, int pagesize = 10);
-        Task<IEnumerable<Curso>> GetAllAsync();
+        Task<PagedList<Curso>> FindAsync(string q = null, int page = 1, int pagesize = 50);
         Task CriarAsync(Curso curso);
     }
 }

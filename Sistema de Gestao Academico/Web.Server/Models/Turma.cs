@@ -15,5 +15,7 @@ namespace Web.Server.Models
         public int DisciplinaId { get; set; }
         [Required]
         public int SemestreId { get; set; }
+        [Required]
+        public int ProfessorId { get; set; }
     }
 }

@@ -30,9 +30,9 @@ namespace Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var cursos = await _cursoRepository.GetAllAsync();
+            var cursos = await _cursoRepository.FindAsync(q, page, pagesize);
 
             if (cursos == null)
                 return NotFound();

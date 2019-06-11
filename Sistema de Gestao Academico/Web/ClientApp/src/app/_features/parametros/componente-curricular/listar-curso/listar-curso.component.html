@@ -1,0 +1,50 @@
+<br />
+<h4>Lista de Cursos</h4><hr />
+<ng-container *ngIf="buscando || (cursos && cursos.length > 0)">
+  <!--Tabela-->
+  <table class="table table-bordered table-hover table-sm table-paginator">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Coordenador</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of cursos">
+        <td>{{ curso.id }}</td>
+        <td>{{ curso.nome }}</td>
+        <td>{{ curso.descricao }}</td>
+        <td>{{ curso.coordenadorId }}</td>
+        <!--<td style="text-align:center">
+          <div class="dropdown dropleft">
+            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown"></button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:" (click)="oferenda.id && excluir(oferenda.id, oferenda.regionalId, oferenda.data)"><i class="fa fa-trash mr-2"></i>{{ getLabel('OferendaRealizadaComponent_Excluir') }}</a>
+            </div>
+          </div>
+        </td>-->
+      </tr>
+      <tr *ngIf="buscando && cursos.length <= 0">
+        <td colspan="7">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" *ngIf="buscando"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Paginação -->
+  <p-paginator [rows]="quantidadeSelecionada" [totalRecords]="quantidadeItens" [rowsPerPageOptions]="quantidades" (onPageChange)="paginar($event)"></p-paginator>
+</ng-container>
+<ng-container *ngIf="!buscando && (cursos && cursos.length <= 0)">
+  <!-- Mensagem de resultado não encontrado -->
+  <div class="card">
+    <div class="card-body" style="text-align:center">
+      <i class="fa fa-frown mr-3 fa-2x"></i>
+      <br />
+      <h5>Nenhum resultado encontrado</h5>
+    </div>
+  </div>
+</ng-container>

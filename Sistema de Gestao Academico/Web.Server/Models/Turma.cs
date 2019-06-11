@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Server.Models
 {
@@ -17,5 +18,15 @@ namespace Web.Server.Models
         public int SemestreId { get; set; }
         [Required]
         public int ProfessorId { get; set; }
+
+
+        [NotMapped]
+        public Curso Curso { get; set; }
+        [NotMapped]
+        public Disciplina Disciplina { get; set; }
+        [NotMapped]
+        public Semestre Semestre { get; set; }
+        [NotMapped]
+        public Usuario Professor { get; set; }
     }
 }

@@ -1,9 +1,35 @@
 <br />
-<h4>Lista de Cursos</h4><hr />
+<h5>
+  <i class="fa fa-list mr-3"></i>
+  <span>Lista de Cursos</span>
+</h5><hr />
+<form #f="ngForm" (ngSubmit)="inicializarBusca()">
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label>Busque pelo nome</label>
+      <input type="text" class="form-control" name="nome" [(ngModel)]="q" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Limpar -->
+      <button type="button" class="btn btn-secondary pull-right" (click)="f.form.reset()">
+        <i class="fa fa-eraser mr-2"></i>
+        <span>Limpar</span>
+      </button>
+      <!-- Buscar -->
+      <button type="submit" class="btn btn-warning pull-right mr-3">
+        <i class="fa fa-search mr-1"></i>
+        <span>Pesquisar</span>
+      </button>
+    </div>
+  </div>
+</form>
+<br />
 <ng-container *ngIf="buscando || (cursos && cursos.length > 0)">
   <!--Tabela-->
   <table class="table table-bordered table-hover table-sm table-paginator">
-    <thead>
+    <thead class="table-header">
       <tr>
         <th>Id</th>
         <th>Nome</th>
@@ -11,12 +37,12 @@
         <th>Coordenador</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="table-body">
       <tr *ngFor="let curso of cursos">
         <td>{{ curso.id }}</td>
         <td>{{ curso.nome }}</td>
         <td>{{ curso.descricao }}</td>
-        <td>{{ curso.coordenadorId }}</td>
+        <td>{{ curso.coordenador?.nome }} {{ curso.coordenador?.sobrenome }}</td>
         <!--<td style="text-align:center">
           <div class="dropdown dropleft">
             <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown"></button>
@@ -48,3 +74,11 @@
     </div>
   </div>
 </ng-container>
+<!-- Botão de inclusão -->
+<div class="row">
+  <div class="col-md-12 mb-3">
+    <button type="button" class="btn btn-primary float" pTooltip="Incluir" [routerLink]="['/componente-curricular/tipo/1']">
+      <i class="fa fa-plus fa-lg"></i>
+    </button>
+  </div>
+</div>

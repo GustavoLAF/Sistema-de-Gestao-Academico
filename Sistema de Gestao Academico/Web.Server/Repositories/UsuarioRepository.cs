@@ -99,18 +99,38 @@ namespace Web.Server.Repositories
             }
         }
 
-        public async Task<IEnumerable<Usuario>> GetAllAsync()
+        public async Task<PagedList<Usuario>> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var sql = "SELECT U.* FROM Usuarios U";
+            var sql = $@"SELECT U.* 
+                           FROM Usuarios U
+                          WHERE (@{nameof(q)} IS NULL OR (U.Nome LIKE CONCAT('%',@{nameof(q)},'%') 
+                                                      OR  U.Sobrenome LIKE CONCAT('%',@{nameof(q)},'%')
+                                                      OR  U.Cpf LIKE CONCAT('%',@{nameof(q)},'%')))
+                          ORDER BY U.Nome
+                         OFFSET @{nameof(pagesize)} * (@{nameof(page)} - 1) ROWS
+                     FETCH NEXT @{nameof(pagesize)} ROWS ONLY";
+            var sqlCount = $@"  
+                   SELECT COUNT(*) as 'Quantidade Item'		                 
+                     FROM Usuarios U
+                    WHERE (@{nameof(q)} IS NULL OR (U.Nome LIKE CONCAT('%',@{nameof(q)},'%') 
+                            OR  U.Sobrenome LIKE CONCAT('%',@{nameof(q)},'%')
+                            OR  U.Cpf LIKE CONCAT('%',@{nameof(q)},'%')))";
 
             using (var connection = _connectionFactory.Invoke())
             {
-                var usuarios = await connection.QueryAsync<Usuario>(sql);
+                var usuarios = await connection.QueryAsync<Usuario>(sql, new { q, page, pagesize });
+                var totalUsuarios = await connection.QueryFirstAsync<int>(sqlCount, new { q });
 
                 if (!usuarios.Any())
                     return null;
 
-                return usuarios;
+                return new PagedList<Usuario>
+                {
+                    Items = usuarios,
+                    PageNumber = page,
+                    PageSize = pagesize,
+                    TotalCount = totalUsuarios
+                };
             }
         }
 

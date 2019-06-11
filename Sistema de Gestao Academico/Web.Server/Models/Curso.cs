@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Server.Models
 {
@@ -11,5 +12,8 @@ namespace Web.Server.Models
         public string Descricao { get; set; }
         [Required]
         public int CoordenadorId { get; set; }
+
+        [NotMapped]
+        public Usuario Coordenador { get; set; }
     }
 }

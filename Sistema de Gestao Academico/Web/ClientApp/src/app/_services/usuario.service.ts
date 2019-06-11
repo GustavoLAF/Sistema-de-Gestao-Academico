@@ -26,9 +26,20 @@ export class UsuarioService {
       .pipe(tap((usuarios: Usuario[]) => usuarios));
   }
 
-  getAll(): Observable<Usuario[]> {
-    return this.authService.get(`${environment.WebApiEndpoint}/usuarios`)
-      .pipe(tap((usuarios: Usuario[]) => usuarios));
+  find(q: string, page: number, pagesize: number): Observable<any> {
+    var params = new HttpParams();
+    if (q) {
+      params = params.set("q", q);
+    }
+    params = params.set("page", page.toString());
+    params = params.set("pagesize", pagesize.toString());
+
+    return this.authService.get(`${environment.WebApiEndpoint}/usuarios`, params)
+      .pipe(map(response => {
+        if (response) {
+          return { items: response.items as Usuario[], length: response.totalCount };
+        }
+      }));
   }
 
   criar(usuario: Usuario): Observable<any> {

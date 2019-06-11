@@ -2,6 +2,7 @@ import { Cargos } from "../_enums/cargos.enum";
 
 export class Usuario {
   id: string;
+  cpf: string;
   nome: string;
   sobrenome: string;
   dataNascimento: Date;
@@ -9,7 +10,6 @@ export class Usuario {
   senha: string;
   cargo: Cargos;
   token: string;
-  cpf: string;
 
   get nomeCompleto(): string {
     return `${this.nome} ${this.sobrenome}`;
@@ -20,6 +20,7 @@ export class Usuario {
     if (usuario) {
       u = new Usuario()
       u.id = usuario.id;
+      u.cpf = usuario.cpf;
       u.nome = usuario.nome;
       u.sobrenome = usuario.sobrenome;
       u.email = usuario.email;

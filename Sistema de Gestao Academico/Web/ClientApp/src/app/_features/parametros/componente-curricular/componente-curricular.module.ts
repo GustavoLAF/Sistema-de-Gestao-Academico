@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { AdminGuard } from '../../../_guards/admin.guard';
 import { CriarCursoComponent } from './criar-curso/criar-curso.component';
@@ -26,11 +27,13 @@ import { ListarTurmaComponent } from './listar-turma/listar-turma.component';
     AutoCompleteModule,
     DropdownModule,
     PaginatorModule,
+    TooltipModule,
     RouterModule.forChild([
       { path: '', component: ComponenteCurricularComponent, canActivate: [AdminGuard] },
-      { path: 'cursos', component: ListarCursoComponent },
-      { path: 'disciplinas', component: ListarDisciplinasComponent },
-      { path: 'turmas', component: ListarTurmaComponent }
+      { path: 'tipo/:componente', component: ComponenteCurricularComponent, canActivate: [AdminGuard] },
+      { path: 'cursos', component: ListarCursoComponent, canActivate: [AdminGuard] },
+      { path: 'disciplinas', component: ListarDisciplinasComponent, canActivate: [AdminGuard] },
+      { path: 'turmas', component: ListarTurmaComponent, canActivate: [AdminGuard] }
     ])
   ],
   declarations: [

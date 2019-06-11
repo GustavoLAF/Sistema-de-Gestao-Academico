@@ -1,2 +1,84 @@
 <br />
-<h4>Lista de Disciplinas</h4><hr />
+<h5>
+  <i class="fa fa-list mr-3"></i>
+  <span>Lista de Disciplinas</span>
+</h5><hr />
+<form #f="ngForm" (ngSubmit)="inicializarBusca()">
+  <div class="row form-group">
+    <div class="col-md-4">
+      <label>Busque pelo nome</label>
+      <input type="text" class="form-control" name="nome" [(ngModel)]="q" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Limpar -->
+      <button type="button" class="btn btn-secondary pull-right" (click)="f.form.reset()">
+        <i class="fa fa-eraser mr-2"></i>
+        <span>Limpar</span>
+      </button>
+      <!-- Buscar -->
+      <button type="submit" class="btn btn-warning pull-right mr-3">
+        <i class="fa fa-search mr-1"></i>
+        <span>Pesquisar</span>
+      </button>
+    </div>
+  </div>
+</form>
+<br />
+<ng-container *ngIf="buscando || (disciplinas && disciplinas.length > 0)">
+  <!--Tabela-->
+  <table class="table table-bordered table-hover table-sm table-paginator">
+    <thead class="table-header">
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Peso Teoria</th>
+        <th>Peso Prática</th>
+      </tr>
+    </thead>
+    <tbody class="table-body">
+      <tr *ngFor="let disciplina of disciplinas">
+        <td>{{ disciplina.id }}</td>
+        <td>{{ disciplina.nome }}</td>
+        <td>{{ disciplina.pesoTeoria }}</td>
+        <td>{{ disciplina.pesoPratica }}</td>
+        <!--<td style="text-align:center">
+          <div class="dropdown dropleft">
+            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown"></button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="javascript:" (click)="oferenda.id && excluir(oferenda.id, oferenda.regionalId, oferenda.data)"><i class="fa fa-trash mr-2"></i>{{ getLabel('OferendaRealizadaComponent_Excluir') }}</a>
+            </div>
+          </div>
+        </td>-->
+      </tr>
+      <tr *ngIf="buscando && disciplinas.length <= 0">
+        <td colspan="7">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" *ngIf="buscando"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Paginação -->
+  <p-paginator [rows]="quantidadeSelecionada" [totalRecords]="quantidadeItens" [rowsPerPageOptions]="quantidades" (onPageChange)="paginar($event)"></p-paginator>
+</ng-container>
+<ng-container *ngIf="!buscando && (disciplinas && disciplinas.length <= 0)">
+  <!-- Mensagem de resultado não encontrado -->
+  <div class="card">
+    <div class="card-body" style="text-align:center">
+      <i class="fa fa-frown mr-3 fa-2x"></i>
+      <br />
+      <h5>Nenhum resultado encontrado</h5>
+    </div>
+  </div>
+</ng-container>
+<!-- Botão de inclusão -->
+<div class="row">
+  <div class="col-md-12 mb-3">
+    <button type="button" class="btn btn-primary float" pTooltip="Incluir" [routerLink]="['/componente-curricular/tipo/2']">
+      <i class="fa fa-plus fa-lg"></i>
+    </button>
+  </div>
+</div>

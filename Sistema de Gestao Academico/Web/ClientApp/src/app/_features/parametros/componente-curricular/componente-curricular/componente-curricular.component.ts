@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-componente-curricular',
@@ -10,7 +11,11 @@ export class ComponenteCurricularComponent implements OnInit {
   tipoComponente: TipoComponente = 0;
   tiposComponente = TipoComponente;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.tipoComponente = params['componente'] as TipoComponente;
+    });
+  }
 
   ngOnInit() {
   }

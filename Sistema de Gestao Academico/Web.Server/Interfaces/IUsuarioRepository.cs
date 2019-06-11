@@ -9,7 +9,7 @@ namespace Web.Server.Interfaces
         Task<Usuario> AutenticarAsync(string email, string senha);
         Task<Usuario> GetById(int id);
         Task<IEnumerable<Usuario>> FindByCargoAsync(Cargos cargo, string q = null, int pagesize = 10);
-        Task<IEnumerable<Usuario>> GetAllAsync();
+        Task<PagedList<Usuario>> FindAsync(string q = null, int page = 1, int pagesize = 50);
         Task CriarAsync(Usuario usuario);
     }
 }

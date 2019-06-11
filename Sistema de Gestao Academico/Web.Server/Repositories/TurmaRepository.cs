@@ -53,7 +53,6 @@ namespace Web.Server.Repositories
                 if (!turmas.Any())
                     return null;
 
-
                 return new PagedList<Turma>
                 {
                     Items = turmas,

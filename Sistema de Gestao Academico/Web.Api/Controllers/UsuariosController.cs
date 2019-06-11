@@ -54,9 +54,9 @@ namespace Web.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var usuarios = await _usuarioRepository.GetAllAsync();
+            var usuarios = await _usuarioRepository.FindAsync(q, page, pagesize);
 
             if (usuarios == null)
                 return NotFound();

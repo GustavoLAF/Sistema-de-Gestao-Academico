@@ -194,6 +194,20 @@ namespace Web.Server.DataContext
                 });
             }
 
+            if (!dbContext.Turmas.Any())
+            {
+                dbContext.Turmas.AddRange(
+                new Turma
+                {
+                    Codigo = "POO192",
+                    CursoId = 1,
+                    DisciplinaId = 6,
+                    ProfessorId = 4,
+                    Periodo = Periodos.Noturno,
+                    SemestreId = 6
+                });
+            }
+
             dbContext.SaveChanges();
         }
     }

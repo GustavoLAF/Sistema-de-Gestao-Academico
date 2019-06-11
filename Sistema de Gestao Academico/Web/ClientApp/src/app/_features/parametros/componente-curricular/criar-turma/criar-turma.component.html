@@ -24,7 +24,7 @@
   <div class="row form-group">
     <div class="col-md-4">
       <label for="curso">Curso</label><br />
-      <p-autoComplete name="curso" field="nome" (onSelect)="aoSelecionarCurso($event)" (onClear)="aoSelecionarCurso($event)"
+      <p-autoComplete name="curso" field="nome" [(ngModel)]="turma.curso" (onSelect)="aoSelecionarCurso($event)" (onClear)="aoSelecionarCurso($event)"
                       [suggestions]="cursos" (completeMethod)="buscarCursos($event)" [size]="40" emptyMessage="Nenhum resultado encontrado"
                       [forceSelection]="true" [dropdown]="true" required>
       </p-autoComplete>
@@ -33,7 +33,7 @@
   <div class="row form-group">
     <div class="col-md-4">
       <label for="disciplina">Disciplina</label><br />
-      <p-autoComplete name="disciplina" field="nome" (onSelect)="aoSelecionarDisciplina($event)" (onClear)="aoSelecionarDisciplina($event)"
+      <p-autoComplete name="disciplina" field="nome" [(ngModel)]="turma.disciplina" (onSelect)="aoSelecionarDisciplina($event)" (onClear)="aoSelecionarDisciplina($event)"
                       [suggestions]="disciplinas" (completeMethod)="buscarDisciplinas($event)" [size]="40" emptyMessage="Nenhum resultado encontrado"
                       [forceSelection]="true" [dropdown]="true" required>
       </p-autoComplete>
@@ -42,7 +42,7 @@
   <div class="row form-group">
     <div class="col-md-4">
       <label for="semestre">Semestre</label><br />
-      <p-autoComplete name="semestre" field="codigo" (onSelect)="aoSelecionarSemestre($event)" (onClear)="aoSelecionarSemestre($event)"
+      <p-autoComplete name="semestre" field="codigo" [(ngModel)]="turma.semestre" (onSelect)="aoSelecionarSemestre($event)" (onClear)="aoSelecionarSemestre($event)"
                       [suggestions]="semestres" (completeMethod)="buscarSemestres($event)" [size]="40" emptyMessage="Nenhum resultado encontrado"
                       [forceSelection]="true" [dropdown]="true" required>
       </p-autoComplete>

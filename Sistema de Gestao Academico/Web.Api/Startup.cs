@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -63,6 +64,12 @@ namespace Web.Api
                 };
             });
 
+            //Swagger
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new Info { Title = "Web API", Version = "v1" });
+            });
+
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ICursoRepository, CursoRepository>();
             services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
@@ -97,6 +104,14 @@ namespace Web.Api
 
             app.UseCors("AllowCorsPolicy");
             app.UseAuthentication();
+
+            //Swagger
+            app.UseSwagger();
+            //Interface
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web - API");
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();

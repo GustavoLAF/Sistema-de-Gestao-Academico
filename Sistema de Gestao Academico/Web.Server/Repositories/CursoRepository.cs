@@ -52,8 +52,9 @@ namespace Web.Server.Repositories
 
         public async Task<PagedList<Curso>> FindAsync(string q = null, int page = 1, int pagesize = 50)
         {
-            var sql = $@"SELECT C.* 
+            var sql = $@"SELECT * 
                            FROM Cursos C
+                          INNER JOIN Usuarios U ON C.CoordenadorId = U.Id
                           WHERE (@{nameof(q)} IS NULL OR C.Nome LIKE CONCAT('%',@{nameof(q)},'%'))
                           ORDER BY C.Nome
                          OFFSET @{nameof(pagesize)} * (@{nameof(page)} - 1) ROWS
@@ -65,7 +66,14 @@ namespace Web.Server.Repositories
 
             using (var connection = _connectionFactory.Invoke())
             {
-                var cursos = await connection.QueryAsync<Curso>(sql, new { q, page, pagesize });
+                var cursos = connection.Query<Curso, Usuario, Curso>(sql,
+                    (curso, coordenador) =>
+                    {
+                        curso.CoordenadorId = coordenador.Id;
+                        curso.Coordenador = coordenador;
+                        return curso;
+                    }, new { q, page, pagesize }, splitOn: "CoordenadorId");
+
                 var totalCursos = await connection.QueryFirstAsync<int>(sqlCount, new { q });
 
                 if (!cursos.Any())

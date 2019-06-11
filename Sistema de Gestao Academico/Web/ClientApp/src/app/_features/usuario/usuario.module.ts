@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DropdownModule } from 'primeng/dropdown';
+import { PaginatorModule } from 'primeng/paginator';
+import { TooltipModule } from 'primeng/tooltip';
 import { NgxMaskModule } from 'ngx-mask'
 import { Ng2BRPipesModule } from 'ng2-brpipes';
 
@@ -17,6 +20,9 @@ import { CriarUsuarioComponent } from './criar-usuario/criar-usuario.component';
     CommonModule,
     FormsModule,
     AutoCompleteModule,
+    DropdownModule,
+    PaginatorModule,
+    TooltipModule,
     Ng2BRPipesModule,
     NgxMaskModule.forRoot(),
     RouterModule.forChild([
